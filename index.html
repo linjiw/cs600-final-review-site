@@ -4,6 +4,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CS600 Final Exam Tutorial — From Zero</title>
+<script>
+  // Define katexFail() before the KaTeX <link> / <script> tags below, so an
+  // immediate network error on those tags has a real handler to call rather
+  // than waiting for DOMContentLoaded. The body banner element may not exist
+  // yet, so we set a flag and let script.js or initReset re-show on init.
+  window.katexFailed = false;
+  window.katexFail = function () {
+    window.katexFailed = true;
+    var banner = document.getElementById('katex-offline-banner');
+    if (banner) banner.style.display = 'block';
+  };
+</script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" onerror="window.katexFail&amp;&amp;window.katexFail()">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous" onerror="window.katexFail&amp;&amp;window.katexFail()"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onerror="window.katexFail&amp;&amp;window.katexFail()"></script>
@@ -36,7 +48,7 @@
       <li><a href="#hero"><span class="toc-num">·</span>Welcome</a></li>
       <li><a href="#how-to"><span class="toc-num">00</span>How to use</a></li>
       <li><a href="#prereq"><span class="toc-num">0.5</span>Prerequisites</a></li>
-      <li><a href="#topic-map"><span class="toc-num">HW</span>Homework map</a></li>
+      <li><a href="#topic-map"><span class="toc-num">·</span>Topic map</a></li>
       <li><a href="#vocab"><span class="toc-num">01</span>Minimum vocabulary</a></li>
       <li><a href="#picker"><span class="toc-num">02</span>Which template?</a></li>
       <li class="toc-divider" aria-hidden="true"></li>
@@ -184,13 +196,12 @@
       </div>
     </section>
 
-    <!-- ============ HOMEWORK MAP ============ -->
+    <!-- ============ TOPIC MAP ============ -->
     <section id="topic-map" class="section" data-screen-label="Topic map">
       <span class="section-label accent">Topic map</span>
       <h2>Where each topic fits</h2>
       <p class="section-intro">
-        Use this as the bridge between the written study guide, the homework solutions, and the
-        interactive sections below. Each row tells you the idea, the proof template, and the first
+        Use this as the bridge between the master templates and the interactive sections below. Each row tells you the idea, the proof template, and the first
         thing to write when you start solving.
       </p>
 
@@ -237,8 +248,8 @@
       </table>
 
       <div class="callout gold">
-        <div class="callout-title">Homework proof routine</div>
-        For every homework proof, do the same four moves: name the model or oracle, state the
+        <div class="callout-title">A four-move routine for every proof</div>
+        For every proof in this material, do the same four moves: name the model or oracle, state the
         invariant, prove correctness separately for yes/no cases, then audit the resource bound
         or probability bound. This keeps long solutions from turning into memorized paragraphs.
       </div>

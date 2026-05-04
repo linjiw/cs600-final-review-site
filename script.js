@@ -458,8 +458,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initReset();
   // KaTeX auto-render (with offline fallback banner)
   // Two failure paths:
-  //   - The <script> tags in the page have onerror="katexFail()" — fires fast
-  //     on a DNS/network error.
+  //   - The <script>/<link> tags in <head> have onerror="window.katexFail()".
+  //     window.katexFail is defined inline in <head> *before* those tags, so
+  //     an immediate network error has a real handler to call. It sets
+  //     window.katexFailed and (if the body has rendered) reveals the banner.
   //   - This polling loop covers the slow-but-eventually-succeeds case. We
   //     wait up to ~15s before giving up so we don't false-alarm on slow
   //     connections (the previous 2.5s budget was too tight).
@@ -467,8 +469,9 @@ document.addEventListener('DOMContentLoaded', () => {
     var banner = document.getElementById('katex-offline-banner');
     if (banner) banner.style.display = 'block';
   }
-  // Expose to the inline onerror handler in <head>.
-  window.katexFail = showKatexBanner;
+  // If a head-time error already fired before the banner element existed,
+  // surface it now that the DOM is ready.
+  if (window.katexFailed) showKatexBanner();
 
   function tryRender(attempt) {
     if (window.renderMathInElement) {
