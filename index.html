@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CS600 Final Exam Tutorial — From Zero</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" onerror="window.katexFail&amp;&amp;window.katexFail()">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous" onerror="window.katexFail&amp;&amp;window.katexFail()"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onerror="window.katexFail&amp;&amp;window.katexFail()"></script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,8 +14,7 @@
 <noscript>
   <div style="background:#fff5e7;border-bottom:2px solid #c95d3f;padding:14px 24px;font-family:Georgia,serif;color:#183128;">
     <strong>JavaScript is disabled.</strong> Math notation (e.g. $\mathsf{NL}$, $O(\log n)$) will appear as
-    raw <code>$…$</code> source, and the flashcards, quizzes, and simulators will not work. Please enable
-    JavaScript and reload the page.
+    raw <code>$…$</code> source, and the flashcards, quizzes, and simulators will not work. Please enable JavaScript and reload the page.
   </div>
 </noscript>
 
@@ -37,25 +36,25 @@
       <li><a href="#hero"><span class="toc-num">·</span>Welcome</a></li>
       <li><a href="#how-to"><span class="toc-num">00</span>How to use</a></li>
       <li><a href="#prereq"><span class="toc-num">0.5</span>Prerequisites</a></li>
-      <li><a href="#topic-map"><span class="toc-num">·</span>Topic map</a></li>
+      <li><a href="#topic-map"><span class="toc-num">HW</span>Homework map</a></li>
       <li><a href="#vocab"><span class="toc-num">01</span>Minimum vocabulary</a></li>
       <li><a href="#picker"><span class="toc-num">02</span>Which template?</a></li>
-      <div class="toc-divider"></div>
+      <li class="toc-divider" aria-hidden="true"></li>
       <li><a href="#self-red"><span class="toc-num">03</span>Self-reducibility</a></li>
       <li><a href="#logspace"><span class="toc-num">04</span>Logspace (L)</a></li>
       <li><a href="#nl"><span class="toc-num">05</span>NL &amp; PATH</a></li>
       <li><a href="#pspace"><span class="toc-num">06</span>PSPACE &amp; Savitch</a></li>
       <li><a href="#nl-complete"><span class="toc-num">07</span>PATH is NL-complete</a></li>
       <li><a href="#nl-conl"><span class="toc-num">08</span>NL = coNL</a></li>
-      <div class="toc-divider"></div>
+      <li class="toc-divider" aria-hidden="true"></li>
       <li><a href="#circuits"><span class="toc-num">09</span>Boolean circuits</a></li>
       <li><a href="#majority"><span class="toc-num">10</span>Majority circuit</a></li>
       <li><a href="#ppoly"><span class="toc-num">11</span>P/poly, NC, AC</a></li>
-      <div class="toc-divider"></div>
+      <li class="toc-divider" aria-hidden="true"></li>
       <li><a href="#randomized"><span class="toc-num">12</span>RP, coRP, BPP, ZPP</a></li>
       <li><a href="#rand-proofs"><span class="toc-num">13</span>Randomized inclusions</a></li>
       <li><a href="#mincut"><span class="toc-num">14</span>Randomized min-cut</a></li>
-      <div class="toc-divider"></div>
+      <li class="toc-divider" aria-hidden="true"></li>
       <li><a href="#templates"><span class="toc-num">15</span>Master templates</a></li>
       <li><a href="#mixed"><span class="toc-num">16</span>Mixed practice</a></li>
       <li><a href="#self-test"><span class="toc-num">16.5</span>Scored self-test</a></li>
@@ -118,11 +117,28 @@
         <strong>Day 1:</strong> sections 03–08 (self-reducibility, L, NL, PSPACE, NL=coNL).<br>
         <strong>Day 2:</strong> sections 09–14 (circuits, P/poly, randomized) + mixed practice.
       </div>
+
+      <div class="callout" style="margin-top:1.2rem;">
+        <div class="callout-title">Section labels you'll see in the margin</div>
+        Each section is tagged so you can plan your time. Tags are stable — they
+        will not change between visits.
+        <ul class="tight" style="margin-top:0.5rem;">
+          <li><span class="learning-tag start">Start here</span> Foundations the rest of the
+            site assumes (vocabulary, logspace, circuits, prerequisites). Read these first.</li>
+          <li><span class="learning-tag core">Exam-critical</span> The high-yield material —
+            self-reducibility, NL/PATH, PSPACE/Savitch, randomized classes, the majority
+            circuit. Make sure you can write the template from memory.</li>
+          <li><span class="learning-tag optional">Come back later</span> Conceptually rich
+            but commonly skipped under time pressure (NL = coNL, randomized min-cut).
+            Save for after you've internalized the core.</li>
+        </ul>
+      </div>
     </section>
 
     <!-- ============ PREREQUISITES ============ -->
     <section id="prereq" class="section" data-screen-label="00.5 Prerequisites">
       <span class="section-label accent">Section 00.5</span>
+      <span class="learning-tag start">Start here</span>
       <h2>Prerequisites &amp; what this guide does <em>not</em> cover</h2>
       <p class="section-intro">
         "From zero" here means <strong>from zero on the second half of CS600</strong>, not from
@@ -168,18 +184,18 @@
       </div>
     </section>
 
-    <!-- ============ TOPIC MAP ============ -->
+    <!-- ============ HOMEWORK MAP ============ -->
     <section id="topic-map" class="section" data-screen-label="Topic map">
       <span class="section-label accent">Topic map</span>
       <h2>Where each topic fits</h2>
       <p class="section-intro">
-        Use this as a bridge between the templates and the interactive sections below. Each row
-        names a topic, the core theory behind it, the proof template to reach for, and the first
-        sentence to write when you start solving.
+        Use this as the bridge between the written study guide, the homework solutions, and the
+        interactive sections below. Each row tells you the idea, the proof template, and the first
+        thing to write when you start solving.
       </p>
 
       <table class="def-table roadmap-table">
-        <thead><tr><th>Topic</th><th>Core theory</th><th>Template</th><th>Start your solution with...</th></tr></thead>
+        <thead><tr><th>Problem</th><th>Core theory</th><th>Template</th><th>Start your solution with...</th></tr></thead>
         <tbody>
           <tr>
             <td>$\mathsf{ILP}$ self-reducibility</td>
@@ -188,19 +204,19 @@
             <td>"Let $D$ be the ILP decider. First ask whether the original instance is feasible."</td>
           </tr>
           <tr>
-            <td>3-coloring self-reducibility</td>
+            <td>$\mathsf{3\text{-}COLOR}$ self-reducibility</td>
             <td>Color anchors, forcing gadgets, extendability invariant.</td>
             <td>F</td>
             <td>"Add a triangle $r,g,b$ so the three colors have names."</td>
           </tr>
           <tr>
-            <td>Longest-run language in $\mathsf{L}$</td>
+            <td>longest-run language in $\mathsf{L}$</td>
             <td>Logspace counters, current-run state, final comparison.</td>
             <td>A</td>
             <td>"The decider scans once and stores $\mathit{bestA},\mathit{bestB},\mathit{curr},\mathit{sym}$."</td>
           </tr>
           <tr>
-            <td>Majority circuit</td>
+            <td>majority circuit</td>
             <td>Circuit families, threshold $k$, OR of ANDs, fan-in conversion.</td>
             <td>C + D</td>
             <td>"Let $k=\lfloor n/2\rfloor+1$. Majority holds iff some $k$-subset is all 1."</td>
@@ -221,9 +237,9 @@
       </table>
 
       <div class="callout gold">
-        <div class="callout-title">A four-move routine for every proof</div>
-        For every proof in this material, do the same four moves: name the model or oracle, state
-        the invariant, prove correctness separately for yes/no cases, then audit the resource bound
+        <div class="callout-title">Homework proof routine</div>
+        For every homework proof, do the same four moves: name the model or oracle, state the
+        invariant, prove correctness separately for yes/no cases, then audit the resource bound
         or probability bound. This keeps long solutions from turning into memorized paragraphs.
       </div>
     </section>
@@ -231,6 +247,7 @@
     <!-- ============ VOCABULARY ============ -->
     <section id="vocab" class="section" data-screen-label="01 Vocabulary">
       <span class="section-label teal">Section 01</span>
+      <span class="learning-tag start">Start here</span>
       <h2>Minimum vocabulary</h2>
       <p class="section-intro">
         Tap a card to flip it. If you can give the reverse from memory in 5 seconds, you know it.
@@ -376,6 +393,7 @@
     <!-- ============ SELF REDUCIBILITY ============ -->
     <section id="self-red" class="section" data-screen-label="03 Self-reducibility">
       <span class="section-label accent">Section 03</span>
+      <span class="learning-tag core">Exam-critical</span>
       <h2>Self-reducibility</h2>
       <p class="section-intro">
         A <strong>decision</strong> algorithm only says yes or no. A <strong>search</strong> algorithm
@@ -593,6 +611,7 @@
     <!-- ============ LOGSPACE ============ -->
     <section id="logspace" class="section" data-screen-label="04 Logspace">
       <span class="section-label teal">Section 04</span>
+      <span class="learning-tag start">Start here</span>
       <h2>Logspace ($\mathsf{L}$) — tiny scratch paper</h2>
       <p class="section-intro">
         Picture a Turing machine with the input on a read-only tape and a tiny scratch tape,
@@ -783,6 +802,7 @@
     <!-- ============ NL & PATH ============ -->
     <section id="nl" class="section" data-screen-label="05 NL and PATH">
       <span class="section-label teal">Section 05</span>
+      <span class="learning-tag core">Exam-critical</span>
       <h2>$\mathsf{NL}$ and $\mathsf{PATH}$</h2>
       <p class="section-intro">
         $\mathsf{NL}$ adds nondeterminism to logspace. The mental model: an $\mathsf{NL}$
@@ -938,6 +958,7 @@
     <!-- ============ PSPACE ============ -->
     <section id="pspace" class="section" data-screen-label="06 PSPACE">
       <span class="section-label teal">Section 06</span>
+      <span class="learning-tag core">Exam-critical</span>
       <h2>$\mathsf{PSPACE}$ &amp; Savitch</h2>
       <p class="section-intro">
         $\mathsf{P}$ and $\mathsf{NP}$ measured time. Now we measure memory. The headline:
@@ -1006,6 +1027,7 @@
     <!-- ============ NL-COMPLETENESS ============ -->
     <section id="nl-complete" class="section" data-screen-label="07 PATH NL-complete">
       <span class="section-label accent">Section 07</span>
+      <span class="learning-tag core">Exam-critical</span>
       <h2>$\mathsf{PATH}$ is $\mathsf{NL}$-complete</h2>
       <p class="section-intro">
         Hardness is a logspace reduction from <em>any</em> $\mathsf{NL}$ language to $\mathsf{PATH}$
@@ -1094,6 +1116,7 @@
     <!-- ============ NL = coNL ============ -->
     <section id="nl-conl" class="section" data-screen-label="08 NL = coNL">
       <span class="section-label accent">Section 08</span>
+      <span class="learning-tag optional">Come back later</span>
       <h2>$\mathsf{NL}=\mathsf{coNL}$ — the counting trick</h2>
       <p class="section-intro">
         Showing reachability is in $\mathsf{NL}$ is easy: guess a path. Showing
@@ -1165,6 +1188,7 @@
     <!-- ============ CIRCUITS ============ -->
     <section id="circuits" class="section" data-screen-label="09 Circuits">
       <span class="section-label gold">Section 09</span>
+      <span class="learning-tag start">Start here</span>
       <h2>Boolean circuits</h2>
       <p class="section-intro">
         Different model: instead of one Turing machine for all input lengths, a separate
@@ -1252,6 +1276,7 @@
     <!-- ============ MAJORITY ============ -->
     <section id="majority" class="section" data-screen-label="10 Majority circuit">
       <span class="section-label gold">Section 10</span>
+      <span class="learning-tag core">Exam-critical</span>
       <h2>Majority circuit</h2>
       <p class="section-intro">
         Click the bits. Watch the OR-of-ANDs decide majority on the fly.
@@ -1332,6 +1357,7 @@
     <!-- ============ P/POLY ============ -->
     <section id="ppoly" class="section" data-screen-label="11 P/poly NC AC">
       <span class="section-label gold">Section 11</span>
+      <span class="learning-tag core">Exam-critical</span>
       <h2>$\mathsf{P/poly}$, uniformity, $\mathsf{NC}$, $\mathsf{AC}$</h2>
 
       <div class="zero-intro">
@@ -1425,6 +1451,7 @@
     <!-- ============ RANDOMIZED ============ -->
     <section id="randomized" class="section" data-screen-label="12 Randomized">
       <span class="section-label plum">Section 12</span>
+      <span class="learning-tag core">Exam-critical</span>
       <h2>$\mathsf{RP}$, $\mathsf{coRP}$, $\mathsf{BPP}$, $\mathsf{ZPP}$</h2>
       <p class="section-intro">
         Randomized algorithms read random bits $r$ as well as the input $x$. The four classes
@@ -1515,6 +1542,7 @@
     <!-- ============ RANDOMIZED PROOFS ============ -->
     <section id="rand-proofs" class="section" data-screen-label="13 Randomized inclusions">
       <span class="section-label plum">Section 13</span>
+      <span class="learning-tag core">Exam-critical</span>
       <h2>Randomized inclusions — proof recipes</h2>
 
       <div class="zero-intro">
@@ -1599,6 +1627,7 @@
     <!-- ============ MIN-CUT ============ -->
     <section id="mincut" class="section" data-screen-label="14 Min-cut">
       <span class="section-label plum">Section 14</span>
+      <span class="learning-tag optional">Come back later</span>
       <h2>Randomized min-cut (Karger)</h2>
       <p class="section-intro">
         Pick a random edge. Contract it (merge endpoints, drop self-loops, keep parallel edges).
@@ -2017,7 +2046,7 @@
     </section>
 
     <div class="footer">
-      <p>CS600 Theory of Computation · final-exam study companion · lectures 9–11.</p>
+      <p>CS600 Spring 2026 · final-exam study companion · lectures 9–11.</p>
       <p>This is a study aid. The original course materials are the source of truth.</p>
     </div>
 

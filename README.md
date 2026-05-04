@@ -6,23 +6,25 @@ logspace and NL, PSPACE & Savitch, NL = coNL, Boolean circuits and P/poly,
 randomized complexity (RP / coRP / BPP / ZPP), and Karger's randomized
 min-cut.
 
-**Live site:** `https://<your-user>.github.io/cs600-final-review-site/`
-(once GitHub Pages is enabled — see "Deploying" below).
+**Live site:** <https://linjiw.github.io/cs600-final-review-site/>
 
 ## What's inside
 
-- 17 sections of explanation, each with the same shape: friendly intro →
-  everyday analogy → core idea → exam-ready template → worked example →
-  graduated practice tiers → common pitfalls → quick quiz → reveal-style
-  practice.
+- 17 study sections plus a scored 8-question self-test (Section 16.5).
+  Every study section has the same shape: friendly intro → everyday analogy
+  → core idea → exam-ready template → worked example → graduated practice
+  tiers → common pitfalls → quick quiz → reveal-style practice.
+- Each section is tagged with one of three learning-path labels —
+  **Start here**, **Exam-critical**, or **Come back later** — so you can
+  plan your time. A legend appears in Section 00.
 - Interactive widgets: PATH walkthrough, majority-circuit toy, RP→BPP
   amplification slider, Karger min-cut boost simulator, template picker.
 - Six "master templates" (A–F) that map common exam-prompt phrasings to
   reusable proof skeletons.
-- A scored 8-question self-test with persistent local progress.
 - Flashcards, quizzes, and reveals all persist across reloads via
-  `localStorage` (no analytics, no backend). A "Reset all progress"
-  button clears everything.
+  `localStorage` (no analytics, no backend). Keys are content-hashed, so
+  reordering or inserting items does not corrupt saved state. A "Reset all
+  progress" button clears everything.
 
 ## Files
 

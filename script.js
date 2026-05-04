@@ -2,7 +2,36 @@
 
 // ---- Local progress persistence (flashcards, quizzes, practice reveals) ----
 // Single localStorage key holding a JSON object. No analytics, no network.
-const PROGRESS_KEY = 'cs600-final-progress-v1';
+// v2: keys are content-hashed (or explicit data-*-id) instead of positional,
+// so reordering or inserting items does not corrupt saved state.
+const PROGRESS_KEY = 'cs600-final-progress-v2';
+
+// Small string hash (djb2 variant). Stable across reloads, no crypto needed.
+function simpleHash(s) {
+  let h = 5381;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return (h >>> 0).toString(36);
+}
+
+// Stable key for a quiz: explicit data-quiz-id wins, then a hash of the
+// question text, then positional index as a last resort.
+function quizKey(q, idx) {
+  if (q.dataset.quizId) return 'quiz:id:' + q.dataset.quizId;
+  const t = q.querySelector('.quiz-q');
+  const text = t ? t.textContent.trim() : '';
+  if (text) return 'quiz:h:' + simpleHash(text);
+  return 'quiz:idx:' + idx;
+}
+
+// Stable key for a practice card: explicit data-practice-id wins, then hash
+// of the question text, then positional index.
+function practiceKey(p, idx) {
+  if (p.dataset.practiceId) return 'practice:id:' + p.dataset.practiceId;
+  const t = p.querySelector('.practice-q');
+  const text = t ? t.textContent.trim() : '';
+  if (text) return 'practice:h:' + simpleHash(text);
+  return 'practice:idx:' + idx;
+}
 
 function loadProgress() {
   try {
@@ -55,10 +84,11 @@ function initToc() {
     const a = map.get(current.id);
     if (a) a.classList.add('is-active');
 
-    // progress bar
+    // progress bar — guard against docH <= 0 (page shorter than viewport)
     const docH = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = Math.min(100, (window.scrollY / docH) * 100);
-    document.getElementById('progress-bar').style.width = pct + '%';
+    const pct = docH <= 0 ? 100 : Math.min(100, Math.max(0, (window.scrollY / docH) * 100));
+    const bar = document.getElementById('progress-bar');
+    if (bar) bar.style.width = pct + '%';
   }
   window.addEventListener('scroll', update, { passive: true });
   update();
@@ -112,7 +142,7 @@ function initPractice() {
     ans.id = ansId;
     btn.setAttribute('aria-controls', ansId);
 
-    const key = 'practice-' + idx;
+    const key = practiceKey(p, idx);
     // Restore prior open state.
     if (progress.practice[key]) {
       p.classList.add('is-open');
@@ -145,7 +175,7 @@ function initQuiz() {
     const correctMsg = q.dataset.correctMsg || 'Correct!';
     const wrongMsg = q.dataset.wrongMsg || 'Not quite — try again.';
     const isScored = q.classList.contains('test-q');
-    const key = 'quiz-' + qIdx;
+    const key = quizKey(q, qIdx);
 
     function applyState(picked) {
       const opts = q.querySelectorAll('.quiz-opt');
@@ -427,6 +457,19 @@ document.addEventListener('DOMContentLoaded', () => {
   initMajority();
   initReset();
   // KaTeX auto-render (with offline fallback banner)
+  // Two failure paths:
+  //   - The <script> tags in the page have onerror="katexFail()" — fires fast
+  //     on a DNS/network error.
+  //   - This polling loop covers the slow-but-eventually-succeeds case. We
+  //     wait up to ~15s before giving up so we don't false-alarm on slow
+  //     connections (the previous 2.5s budget was too tight).
+  function showKatexBanner() {
+    var banner = document.getElementById('katex-offline-banner');
+    if (banner) banner.style.display = 'block';
+  }
+  // Expose to the inline onerror handler in <head>.
+  window.katexFail = showKatexBanner;
+
   function tryRender(attempt) {
     if (window.renderMathInElement) {
       renderMathInElement(document.body, {
@@ -440,11 +483,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       return;
     }
-    if (attempt < 10) {
-      setTimeout(function () { tryRender(attempt + 1); }, 250);
+    if (attempt < 30) {
+      setTimeout(function () { tryRender(attempt + 1); }, 500);
     } else {
-      var banner = document.getElementById('katex-offline-banner');
-      if (banner) banner.style.display = 'block';
+      showKatexBanner();
     }
   }
   tryRender(0);

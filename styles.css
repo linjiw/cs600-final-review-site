@@ -103,7 +103,41 @@ body {
   height: 1px;
   background: var(--line);
   margin: 0.9rem 0;
+  list-style: none;
 }
+
+/* ---------- Learning-path labels ---------- */
+.learning-tag {
+  display: inline-block;
+  font-family: "Gill Sans", "Avenir Next", sans-serif;
+  font-weight: 700;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  border: 1px solid transparent;
+}
+.learning-tag.start {
+  background: rgba(46, 122, 101, 0.12);
+  color: var(--teal);
+  border-color: rgba(46, 122, 101, 0.35);
+}
+.learning-tag.core {
+  background: rgba(201, 93, 63, 0.12);
+  color: var(--accent-deep);
+  border-color: rgba(201, 93, 63, 0.4);
+}
+.learning-tag.optional {
+  background: rgba(210, 170, 43, 0.18);
+  color: #8a6612;
+  border-color: rgba(210, 170, 43, 0.45);
+}
+.learning-tag.start::before { content: "▶ "; }
+.learning-tag.core::before  { content: "★ "; }
+.learning-tag.optional::before { content: "↩ "; }
 
 main {
   padding: 2.5rem clamp(1.2rem, 3vw, 3rem) 5rem;
@@ -276,6 +310,9 @@ p { margin: 0.6rem 0; }
   font-weight: 800;
   color: var(--accent-deep);
   white-space: nowrap;
+}
+@media (max-width: 880px) {
+  
 }
 
 .callout {
