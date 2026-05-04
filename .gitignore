@@ -1,0 +1,43 @@
+# macOS
+.DS_Store
+
+# Editor / tool state
+.claude/
+.vscode/
+.idea/
+
+# LaTeX build artifacts
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.bbl
+*.blg
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+tmp*.tmp
+
+# Archives
+*.zip
+
+# Generated preview images
+*_page*.png
+
+# Local text extraction scratch files
+Lecture*_CS600*.txt
+hw1_4.txt
+hw1_solutions.txt
+
+# Node / web tooling (none in use yet, but defensive)
+node_modules/
+
+# Large local-only course materials (kept out of git for size / copyright)
+# See README.md for what should live here.
+lectures/
+references/

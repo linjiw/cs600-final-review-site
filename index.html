@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CS600 Final Exam Tutorial — From Zero</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<noscript>
+  <div style="background:#fff5e7;border-bottom:2px solid #c95d3f;padding:14px 24px;font-family:Georgia,serif;color:#183128;">
+    <strong>JavaScript is disabled.</strong> Math notation (e.g. $\mathsf{NL}$, $O(\log n)$) will appear as
+    raw <code>$…$</code> source, and the flashcards, quizzes, and simulators will not work. Please enable
+    JavaScript and reload the page.
+  </div>
+</noscript>
+
+<div id="katex-offline-banner" style="display:none;background:#fff5e7;border-bottom:2px solid #c95d3f;padding:10px 24px;font-family:Georgia,serif;color:#183128;font-size:14px;">
+  Math fonts could not load (KaTeX CDN unreachable). Math is shown as raw source. To use offline,
+  download <code>katex.min.css</code>, <code>katex.min.js</code>, and <code>auto-render.min.js</code>
+  into a local <code>katex/</code> folder and update the &lt;link&gt;/&lt;script&gt; tags in this page.
+</div>
+
+<div id="progress-bar" class="progress-bar" data-screen-label="Progress"></div>
+
+<div class="layout">
+
+  <!-- ============ TOC ============ -->
+  <aside class="toc">
+    <div class="toc-brand">CS600 Final</div>
+    <div class="toc-sub">From Zero · Spring 2026</div>
+    <ul class="toc-list">
+      <li><a href="#hero"><span class="toc-num">·</span>Welcome</a></li>
+      <li><a href="#how-to"><span class="toc-num">00</span>How to use</a></li>
+      <li><a href="#prereq"><span class="toc-num">0.5</span>Prerequisites</a></li>
+      <li><a href="#topic-map"><span class="toc-num">·</span>Topic map</a></li>
+      <li><a href="#vocab"><span class="toc-num">01</span>Minimum vocabulary</a></li>
+      <li><a href="#picker"><span class="toc-num">02</span>Which template?</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#self-red"><span class="toc-num">03</span>Self-reducibility</a></li>
+      <li><a href="#logspace"><span class="toc-num">04</span>Logspace (L)</a></li>
+      <li><a href="#nl"><span class="toc-num">05</span>NL &amp; PATH</a></li>
+      <li><a href="#pspace"><span class="toc-num">06</span>PSPACE &amp; Savitch</a></li>
+      <li><a href="#nl-complete"><span class="toc-num">07</span>PATH is NL-complete</a></li>
+      <li><a href="#nl-conl"><span class="toc-num">08</span>NL = coNL</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#circuits"><span class="toc-num">09</span>Boolean circuits</a></li>
+      <li><a href="#majority"><span class="toc-num">10</span>Majority circuit</a></li>
+      <li><a href="#ppoly"><span class="toc-num">11</span>P/poly, NC, AC</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#randomized"><span class="toc-num">12</span>RP, coRP, BPP, ZPP</a></li>
+      <li><a href="#rand-proofs"><span class="toc-num">13</span>Randomized inclusions</a></li>
+      <li><a href="#mincut"><span class="toc-num">14</span>Randomized min-cut</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#templates"><span class="toc-num">15</span>Master templates</a></li>
+      <li><a href="#mixed"><span class="toc-num">16</span>Mixed practice</a></li>
+      <li><a href="#self-test"><span class="toc-num">16.5</span>Scored self-test</a></li>
+      <li><a href="#checklist"><span class="toc-num">17</span>Final checklist</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="hero" data-screen-label="Hero">
+      <div class="eyebrow">CS600 · Theory of Computation · Final Exam Prep</div>
+      <h1>Final exam, but slow and friendly.</h1>
+      <p class="lede">
+        A from-zero learning site for the second half of CS600 — logspace,
+        PSPACE, circuits, P/poly, and randomized complexity. Built around the
+        same instinct as a good study session: read the idea, see the picture,
+        try a small thing, then move on.
+      </p>
+      <div class="hero-pills">
+        <span class="pill">Lectures 9–11</span>
+        <span class="pill accent">Self-reducibility · Logspace · Circuits · Randomized</span>
+        <span class="pill gold">11 topics</span>
+        <span class="pill plum">Templates &amp; practice</span>
+      </div>
+      <div class="hero-actions">
+        <a class="button primary" href="#how-to">Start at the beginning</a>
+        <a class="button secondary" href="#picker">I just need a template</a>
+        <a class="button ghost" href="#mixed">Take the mixed practice</a>
+      </div>
+    </section>
+
+    <!-- ============ HOW TO USE ============ -->
+    <section id="how-to" class="section" data-screen-label="00 How to use">
+      <span class="section-label teal">Section 00</span>
+      <h2>How to use this guide</h2>
+      <p class="section-intro">
+        Don't read it like a novel. Each topic has the same shape: a friendly explanation,
+        a <strong>template</strong> you can copy in an exam, a <strong>worked example</strong>,
+        and a tiny <strong>practice</strong>. Memorize templates, not proofs.
+      </p>
+
+      <div class="grid-3" style="margin-top:1.2rem;">
+        <div class="card tinted-teal">
+          <h4 style="margin-top:0;">1. Vocabulary first</h4>
+          <p>Skim Section 01. If a class name like $\mathsf{NL}$ or $\mathsf{ZPP}$ feels fuzzy, pause there. Everything else builds on it.</p>
+        </div>
+        <div class="card tinted-accent">
+          <h4 style="margin-top:0;">2. One topic at a time</h4>
+          <p>Read the prose, then cover the template and rewrite it from memory. Then read the worked example.</p>
+        </div>
+        <div class="card tinted-gold">
+          <h4 style="margin-top:0;">3. Mixed practice last</h4>
+          <p>Section 16 mashes everything together. If you can pick the right template there, you're ready.</p>
+        </div>
+      </div>
+
+      <div class="callout teal" style="margin-top:1.4rem;">
+        <div class="callout-title">Two-day plan, if you're cramming</div>
+        <strong>Day 1:</strong> sections 03–08 (self-reducibility, L, NL, PSPACE, NL=coNL).<br>
+        <strong>Day 2:</strong> sections 09–14 (circuits, P/poly, randomized) + mixed practice.
+      </div>
+    </section>
+
+    <!-- ============ PREREQUISITES ============ -->
+    <section id="prereq" class="section" data-screen-label="00.5 Prerequisites">
+      <span class="section-label accent">Section 00.5</span>
+      <h2>Prerequisites &amp; what this guide does <em>not</em> cover</h2>
+      <p class="section-intro">
+        "From zero" here means <strong>from zero on the second half of CS600</strong>, not from
+        zero on theory of computation. If any of the items in the left column below feel unfamiliar,
+        spend an hour on the corresponding lecture before diving in.
+      </p>
+
+      <div class="compare">
+        <div class="left">
+          <h5>Assumed background (Lectures 1–8)</h5>
+          <ul class="tight">
+            <li>Turing machines, deterministic vs nondeterministic, configurations.</li>
+            <li>Decidability, the halting problem, undecidable languages.</li>
+            <li>Regular languages and the pumping lemma (only for context — we don't reuse it directly).</li>
+            <li>Complexity classes $\mathsf{P}$ and $\mathsf{NP}$ and the verifier definition of $\mathsf{NP}$.</li>
+            <li>Polynomial-time many-one reductions and what "$A\le_p B$" means.</li>
+            <li>$\mathsf{NP}$-completeness: Cook–Levin, $\mathsf{SAT}$, $\mathsf{3\text{-}SAT}$, $\mathsf{3\text{-}COLOR}$, $\mathsf{ILP}$.</li>
+            <li>Asymptotic notation and basic counting / probability.</li>
+          </ul>
+        </div>
+        <div class="right">
+          <h5>Covered here (Lectures 9–11)</h5>
+          <ul class="tight">
+            <li>Self-reducibility — turning a decider into a search algorithm.</li>
+            <li>Logspace ($\mathsf{L}$) and nondeterministic logspace ($\mathsf{NL}$).</li>
+            <li>$\mathsf{PATH}$ and its $\mathsf{NL}$-completeness.</li>
+            <li>$\mathsf{NL}=\mathsf{coNL}$ (Immerman–Szelepcsényi).</li>
+            <li>$\mathsf{PSPACE}$, Savitch's theorem.</li>
+            <li>Boolean circuit families, size, depth, $\mathcal{B}_0$ vs $\mathcal{B}_1$.</li>
+            <li>$\mathsf{P/poly}$, uniformity, $\mathsf{NC}^i$, $\mathsf{AC}^i$.</li>
+            <li>Randomized classes $\mathsf{RP}$, $\mathsf{coRP}$, $\mathsf{BPP}$, $\mathsf{ZPP}$.</li>
+            <li>Karger's randomized min-cut.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Quick self-check before you start</div>
+        Can you state in one sentence each: (a) what an $\mathsf{NP}$-verifier is; (b) what it
+        means for a problem to be $\mathsf{NP}$-complete; (c) what a configuration of a Turing
+        machine is; (d) why the halting problem is undecidable? If any of these feel shaky, the
+        site will still help, but plan to refer back to lectures 1–8 as needed.
+      </div>
+    </section>
+
+    <!-- ============ TOPIC MAP ============ -->
+    <section id="topic-map" class="section" data-screen-label="Topic map">
+      <span class="section-label accent">Topic map</span>
+      <h2>Where each topic fits</h2>
+      <p class="section-intro">
+        Use this as a bridge between the templates and the interactive sections below. Each row
+        names a topic, the core theory behind it, the proof template to reach for, and the first
+        sentence to write when you start solving.
+      </p>
+
+      <table class="def-table roadmap-table">
+        <thead><tr><th>Topic</th><th>Core theory</th><th>Template</th><th>Start your solution with...</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>$\mathsf{ILP}$ self-reducibility</td>
+            <td>Decision-to-search, forcing constraints, binary search over integer coordinates.</td>
+            <td>F</td>
+            <td>"Let $D$ be the ILP decider. First ask whether the original instance is feasible."</td>
+          </tr>
+          <tr>
+            <td>3-coloring self-reducibility</td>
+            <td>Color anchors, forcing gadgets, extendability invariant.</td>
+            <td>F</td>
+            <td>"Add a triangle $r,g,b$ so the three colors have names."</td>
+          </tr>
+          <tr>
+            <td>Longest-run language in $\mathsf{L}$</td>
+            <td>Logspace counters, current-run state, final comparison.</td>
+            <td>A</td>
+            <td>"The decider scans once and stores $\mathit{bestA},\mathit{bestB},\mathit{curr},\mathit{sym}$."</td>
+          </tr>
+          <tr>
+            <td>Majority circuit</td>
+            <td>Circuit families, threshold $k$, OR of ANDs, fan-in conversion.</td>
+            <td>C + D</td>
+            <td>"Let $k=\lfloor n/2\rfloor+1$. Majority holds iff some $k$-subset is all 1."</td>
+          </tr>
+          <tr>
+            <td>$\mathsf{RP}\subseteq\mathsf{BPP}$</td>
+            <td>One-sided error, independent repetition, probability thresholds.</td>
+            <td>E</td>
+            <td>"Run the RP machine twice and accept iff either run accepts."</td>
+          </tr>
+          <tr>
+            <td>$\mathsf{RP}\cap\mathsf{coRP}=\mathsf{ZPP}$</td>
+            <td>Trustworthy accept/reject answers, zero-error with possible $\bot$.</td>
+            <td>E</td>
+            <td>"Use the RP machine to safely output 1 and the coRP machine to safely output 0."</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout gold">
+        <div class="callout-title">A four-move routine for every proof</div>
+        For every proof in this material, do the same four moves: name the model or oracle, state
+        the invariant, prove correctness separately for yes/no cases, then audit the resource bound
+        or probability bound. This keeps long solutions from turning into memorized paragraphs.
+      </div>
+    </section>
+
+    <!-- ============ VOCABULARY ============ -->
+    <section id="vocab" class="section" data-screen-label="01 Vocabulary">
+      <span class="section-label teal">Section 01</span>
+      <h2>Minimum vocabulary</h2>
+      <p class="section-intro">
+        Tap a card to flip it. If you can give the reverse from memory in 5 seconds, you know it.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">If even the basics feel fuzzy</div>
+        <h4>Three terms that get reused everywhere</h4>
+        <p>
+          Before flashcards, here are the three concepts that the rest of the course rests on.
+          If any of these feel unclear, slow down here.
+        </p>
+        <ol class="tight" style="margin:0.4rem 0 0 1.1rem;">
+          <li>
+            <strong>Decision problem ≡ language.</strong> Every yes/no problem is a set of
+            "yes" inputs. "Solving the problem" means: given $x$, output yes iff $x\in L$.
+          </li>
+          <li>
+            <strong>Resource bound (time / space).</strong> A complexity class collects all
+            languages that some Turing machine can decide using a bounded amount of a resource.
+            <em>Time</em> = number of computation steps. <em>Space</em> = number of work-tape cells.
+          </li>
+          <li>
+            <strong>Reduction.</strong> "$A$ reduces to $B$" via function $f$ means: $x\in A\iff
+            f(x)\in B$, and $f$ itself is computable in some bounded resource (poly-time, logspace).
+            If $A$ reduces to $B$ <em>and</em> $B$ is easy, then $A$ is easy.
+          </li>
+        </ol>
+      </div>
+
+      <h3>Class flashcards</h3>
+      <div class="flashcard-deck">
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">L</div><span style="color:var(--muted);">(Logspace)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">$\mathsf{L}=\mathsf{SPACE}(\log n)$. Deterministic machine, $O(\log n)$ work tape, read-only input.</div>
+        </div></div>
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">NL</div><span style="color:var(--muted);">(Nondet. logspace)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">$\mathsf{NL}=\mathsf{NSPACE}(\log n)$. Tiny memory + nondeterminism. $\mathsf{PATH}$ is the canonical complete problem.</div>
+        </div></div>
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">PSPACE</div><span style="color:var(--muted);">(Poly space)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">$\bigcup_k \mathsf{SPACE}(n^k)$. By Savitch, $\mathsf{PSPACE}=\mathsf{NPSPACE}$. Sits between $\mathsf{NP}$ and $\mathsf{EXPTIME}$.</div>
+        </div></div>
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">P/poly</div><span style="color:var(--muted);">(Nonuniform)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">Languages with polynomial-size circuit families. The family doesn't have to be computable — even some undecidable languages are inside.</div>
+        </div></div>
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">NC<sup>i</sup></div><span style="color:var(--muted);">(Parallel, bounded)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">Polynomial size, <strong>bounded</strong> fan-in, depth $O(\log^i n)$.</div>
+        </div></div>
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">AC<sup>i</sup></div><span style="color:var(--muted);">(Parallel, unbounded)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">Polynomial size, <strong>unbounded</strong> fan-in AND/OR, depth $O(\log^i n)$. Binary addition lives in $\mathsf{AC}^0$.</div>
+        </div></div>
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">RP</div><span style="color:var(--muted);">(One-sided)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">PPT machine. Yes-instance: $\Pr[\text{accept}]\ge \tfrac12$. No-instance: $\Pr[\text{accept}]=0$. <em>Accept is trustworthy.</em></div>
+        </div></div>
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">coRP</div><span style="color:var(--muted);">(Other side)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">Yes: $\Pr[\text{accept}]=1$. No: $\Pr[\text{reject}]\ge \tfrac12$. <em>Reject is trustworthy.</em></div>
+        </div></div>
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">BPP</div><span style="color:var(--muted);">(Two-sided)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">Yes: $\Pr[\text{accept}]\ge \tfrac23$. No: $\Pr[\text{accept}]\le \tfrac13$. Errors on both sides, but bounded away from $\tfrac12$.</div>
+        </div></div>
+        <div class="flashcard"><div class="flashcard-inner">
+          <div class="flashcard-front"><div class="term">ZPP</div><span style="color:var(--muted);">(Zero error)</span><div class="hint">Click to flip</div></div>
+          <div class="flashcard-back">Never wrong. May output $\bot$. Equals $\mathsf{RP}\cap\mathsf{coRP}$.</div>
+        </div></div>
+      </div>
+
+      <h3>Plain-English term dictionary</h3>
+      <p class="section-intro">
+        These are the words that make proofs sound harder than they are. Read the "exam move"
+        column as what you should do when the term appears in a prompt.
+      </p>
+      <div class="term-grid">
+        <div class="term-card"><strong>Decision problem / language</strong><p>A yes/no problem written as a set of yes-instances.</p><span>Exam move: translate "$x\in L$" to "input $x$ should be accepted."</span></div>
+        <div class="term-card"><strong>Yes-instance / no-instance</strong><p>A yes-instance belongs to the language; a no-instance does not.</p><span>Exam move: prove both directions, not just the accepting case.</span></div>
+        <div class="term-card"><strong>Decider</strong><p>An algorithm that always halts and answers accept/reject correctly.</p><span>Exam move: say why it halts within the claimed resource.</span></div>
+        <div class="term-card"><strong>Oracle</strong><p>A black-box subroutine you may query as if it answers instantly.</p><span>Exam move: count how many oracle calls you make.</span></div>
+        <div class="term-card"><strong>Witness / certificate</strong><p>The object proving a yes answer: assignment, path, coloring, vector.</p><span>Exam move: name its format before constructing or verifying it.</span></div>
+        <div class="term-card"><strong>Reduction</strong><p>A transformation from problem $A$ to problem $B$ preserving yes/no answers.</p><span>Exam move: prove $x\in A\iff f(x)\in B$ and bound resources for $f$.</span></div>
+        <div class="term-card"><strong>Logspace reduction</strong><p>A reduction whose transducer uses only $O(\log n)$ work space.</p><span>Exam move: output one local piece at a time; never store the full output.</span></div>
+        <div class="term-card"><strong>Configuration</strong><p>A full snapshot of a machine: state, head positions, and work tape.</p><span>Exam move: use configurations as graph vertices.</span></div>
+        <div class="term-card"><strong>Configuration graph</strong><p>Graph where edges are one-step machine moves.</p><span>Exam move: reduce machine acceptance to reachability from start to accept.</span></div>
+        <div class="term-card"><strong>Deterministic vs nondeterministic</strong><p>Deterministic has one next move; nondeterministic may guess among many.</p><span>Exam move: yes means some branch accepts; no means no branch accepts.</span></div>
+        <div class="term-card"><strong>Complement / co-class</strong><p>The same problem with yes and no swapped.</p><span>Exam move: be careful which answer is trustworthy.</span></div>
+        <div class="term-card"><strong>Hard vs complete</strong><p>Hard: everything in the class reduces to it. Complete: hard and also inside the class.</p><span>Exam move: prove membership and hardness separately.</span></div>
+        <div class="term-card"><strong>Self-reducibility</strong><p>Use a decision decider repeatedly to build the witness.</p><span>Exam move: force one witness piece and maintain extendability.</span></div>
+        <div class="term-card"><strong>Fan-in</strong><p>The number of inputs entering one gate.</p><span>Exam move: replace fan-in $k$ by a binary tree when moving to $\mathcal{B}_0$.</span></div>
+        <div class="term-card"><strong>Size vs depth</strong><p>Size counts gates; depth counts longest input-to-output chain.</p><span>Exam move: count both, because one can be small while the other is large.</span></div>
+        <div class="term-card"><strong>Uniform vs nonuniform</strong><p>Uniform families are generated by an algorithm; nonuniform families can be hardwired.</p><span>Exam move: for $\mathsf{P/poly}$, remember the family need not be computable.</span></div>
+        <div class="term-card"><strong>One-sided error</strong><p>Only one answer can be wrong; the other is always trustworthy.</p><span>Exam move: identify whether accept or reject is safe.</span></div>
+        <div class="term-card"><strong>Amplification</strong><p>Repeat independently to shrink error probability.</p><span>Exam move: multiply independent failure probabilities.</span></div>
+        <div class="term-card"><strong>Cut / min-cut</strong><p>A cut separates a graph into two sides; a min-cut uses the fewest crossing edges.</p><span>Exam move: fix one true min-cut and analyze the chance you never contract it.</span></div>
+        <div class="term-card"><strong>Contraction</strong><p>Merge two vertices connected by an edge and keep parallel edges.</p><span>Exam move: success in Karger means never contracting an edge of the fixed min-cut.</span></div>
+      </div>
+
+      <h3>What fits in $O(\log n)$ space?</h3>
+      <table class="def-table">
+        <thead><tr><th>Fits in logspace</th><th>Usually does not fit</th></tr></thead>
+        <tbody>
+          <tr><td>One counter up to $n$ (uses $\log n$ bits)</td><td>An array of $n$ booleans</td></tr>
+          <tr><td>A constant number of counters</td><td>A whole guessed path of length $n$</td></tr>
+          <tr><td>One vertex name</td><td>The set of all reachable vertices</td></tr>
+          <tr><td>The current input position</td><td>A copy of the whole input</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <div class="callout-title">The single most useful fact</div>
+        A counter that goes up to $n$ needs $O(\log n)$ bits in binary. That's why "store a counter" is always free in logspace.
+      </div>
+    </section>
+
+    <!-- ============ TEMPLATE PICKER ============ -->
+    <section id="picker" class="section" data-screen-label="02 Template picker">
+      <span class="section-label accent">Section 02</span>
+      <h2>Which template should I use?</h2>
+      <p class="section-intro">
+        Click a clue from the exam prompt. The matcher tells you which template to reach for.
+      </p>
+
+      <div id="template-picker" class="picker">
+        <div style="margin-bottom:0.6rem;">
+          <button class="picker-clue" data-t="L">"…is in $\mathsf{L}$"</button>
+          <button class="picker-clue" data-t="NL">"…is in $\mathsf{NL}$"</button>
+          <button class="picker-clue" data-t="circuit">"build a circuit family"</button>
+          <button class="picker-clue" data-t="fanin">"convert $\mathcal{B}_1$ to $\mathcal{B}_0$"</button>
+          <button class="picker-clue" data-t="rand">"$\mathsf{RP}\subseteq\mathsf{BPP}$"</button>
+          <button class="picker-clue" data-t="self">"recover the witness"</button>
+          <button class="picker-clue" data-t="pspace">"compare space classes"</button>
+          <button class="picker-clue" data-t="conl">"non-reachability"</button>
+        </div>
+        <div class="picker-result"></div>
+      </div>
+    </section>
+
+    <!-- ============ SELF REDUCIBILITY ============ -->
+    <section id="self-red" class="section" data-screen-label="03 Self-reducibility">
+      <span class="section-label accent">Section 03</span>
+      <h2>Self-reducibility</h2>
+      <p class="section-intro">
+        A <strong>decision</strong> algorithm only says yes or no. A <strong>search</strong> algorithm
+        produces the witness that proves yes. <em>Self-reducibility</em> is the trick of
+        squeezing a search algorithm out of a decision algorithm.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Why we care</div>
+        <h4>The decision/search gap</h4>
+        <p>
+          You've spent the whole semester on <em>decision problems</em> — yes/no questions like
+          "is this graph 3-colorable?" or "does this CNF have a satisfying assignment?".
+          But in real life, knowing that a satisfying assignment <em>exists</em> is rarely
+          useful: you usually want the assignment <em>itself</em>.
+        </p>
+        <p>
+          Self-reducibility says: for many problems, <strong>a yes/no decider is already enough</strong>
+          to construct the witness. You don't need a separate "search algorithm." You just call
+          your decider polynomially many times in a clever way.
+        </p>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy</div>
+        Imagine a sommelier who can only answer one question: "Does this case contain at
+        least one bottle of red wine?" To <em>find</em> a red wine bottle, you ask once. If yes,
+        split the case into two halves; ask which half has a red. Recurse on that half. After
+        $\log_2(\text{case size})$ questions you've narrowed it down to one bottle. <strong>That's
+        self-reducibility</strong>: a yes/no oracle plus a "split and force" trick gives you the
+        actual object.
+      </div>
+
+      <div class="callout teal">
+        <div class="callout-title">The core idea</div>
+        Pin down one piece of the witness at a time. After each pin, check that the
+        partial witness is still extendable — i.e. ask the decider on a restricted instance.
+        Keep an accepting choice, and keep going.
+      </div>
+
+      <div class="zoom-out">
+        <h5>The shape of every self-reducibility proof</h5>
+        Three things appear in every proof, in this order:
+        <ol class="tight" style="margin-top:0.4rem;">
+          <li><strong>Witness format.</strong> What pieces does the answer have? (a vector, a coloring, an assignment).</li>
+          <li><strong>Forcing gadget.</strong> A way to <em>modify</em> the input that says "the answer must use this value here."</li>
+          <li><strong>Invariant.</strong> A guarantee that, after each forcing step, some valid witness still exists.</li>
+        </ol>
+        If you remember those three slots, every self-reducibility problem becomes filling in three blanks.
+      </div>
+
+      <div class="template-card">
+        <strong>Template F · Self-reducibility</strong>
+        <ol>
+          <li>Let $D$ be a decider for the decision version.</li>
+          <li>Run $D$ on the original instance. If it rejects, no witness exists.</li>
+          <li>Build the witness piece by piece, maintaining: <em>the part already fixed can still extend to a full witness.</em></li>
+          <li>For each next piece, build restricted instances that force each candidate value, query $D$ on them, keep one accepting choice.</li>
+          <li>Bound the number of queries by a polynomial.</li>
+        </ol>
+      </div>
+
+      <div class="worked-card">
+        <strong>Worked example · 3-COLOR self-reducibility</strong>
+        <p><strong>Step 1.</strong> Run the 3-COLOR decider $D$ on $G$. If reject, stop.</p>
+        <p><strong>Step 2 — color anchors.</strong> Add three new vertices $r,g,b$ joined as a triangle. In any proper 3-coloring they get three different colors; call them Red, Green, Blue.</p>
+        <p><strong>Step 3 — force one vertex.</strong> To force $v$ to take $r$'s color, add edges $v$–$g$ and $v$–$b$. Now $v$ can't use Green or Blue, so it must take Red.</p>
+        <p><strong>Step 4 — sweep.</strong> For each original vertex $v_i$, try forcing Red, then Green, then Blue. Query $D$ each time. At least one choice must succeed (invariant). Keep it.</p>
+        <p><strong>Step 5 — query budget.</strong> $1+3|V|$ queries — polynomial. Done.</p>
+      </div>
+
+      <h3>Three graduated examples — same recipe, harder each time</h3>
+
+      <div class="tier-stack">
+        <div class="tier">
+          <div class="tier-head">
+            <span class="tier-badge warmup">Warm-up</span>
+            <span class="tier-title">SAT (the simplest possible)</span>
+          </div>
+          <p>
+            Decision: "Does CNF formula $\varphi$ have a satisfying assignment?"
+            Witness: a Boolean assignment $x_1,\ldots,x_n\in\{0,1\}$.
+          </p>
+          <ol class="tight">
+            <li>Run the decider $D(\varphi)$. If reject, no witness — stop.</li>
+            <li>Try $x_1=0$: substitute $0$ for $x_1$ everywhere in $\varphi$, simplify, get $\varphi_0$. Query $D(\varphi_0)$.</li>
+            <li>If accept, commit $x_1\leftarrow 0$, continue with $\varphi_0$.</li>
+            <li>Else commit $x_1\leftarrow 1$, continue with $\varphi_1$.</li>
+            <li>Repeat for $x_2,\ldots,x_n$.</li>
+          </ol>
+          <p style="color:var(--muted); font-size:0.95rem;">
+            <strong>Forcing gadget:</strong> substitution. <strong>Invariant:</strong> $\varphi_i$ is
+            still satisfiable. <strong>Queries:</strong> exactly $n$. This is the cleanest example.
+          </p>
+        </div>
+
+        <div class="tier">
+          <div class="tier-head">
+            <span class="tier-badge standard">Standard — ILP</span>
+            <span class="tier-title">ILP self-reducibility</span>
+          </div>
+          <p>
+            $\mathsf{ILP}=\{\langle A,b,\ell,u\rangle:\exists\,x\in\mathbb{Z}^n,\ Ax\le b,\ \ell\le x_i\le u\}$.
+            Witness: integer vector $x=(x_1,\ldots,x_n)$.
+          </p>
+          <ol class="buildup">
+            <li>
+              <strong>Run $D$ once.</strong> If reject, no witness. Otherwise the invariant "some
+              feasible solution exists" holds.
+            </li>
+            <li>
+              <strong>Pin coordinates left to right.</strong> We will determine $x_1$, then $x_2$, etc.
+              After fixing $x_1=a_1,\ldots,x_{i-1}=a_{i-1}$, the invariant is: <em>some feasible
+              solution still extends this prefix</em>.
+            </li>
+            <li>
+              <strong>Encode "$x_j=a_j$" using two inequalities.</strong> ILP allows only $\le$ constraints,
+              so write $x_j\le a_j$ and $-x_j\le -a_j$. Add both rows to $A,b$ when fixing.
+            </li>
+            <li>
+              <strong>Binary-search the next coordinate.</strong> For $x_i$, set $L=\ell, R=u$.
+              While $L &lt; R$: pick midpoint $m$, add the constraint $x_i\le m$, query $D$.
+              <ul class="tight" style="margin-top:0.3rem;">
+                <li>Accept → keep the lower half: $R\leftarrow m$.</li>
+                <li>Reject → must lie in upper half: $L\leftarrow m+1$, add $x_i\ge m+1$.</li>
+              </ul>
+              When $L=R$, commit $x_i\leftarrow L$.
+            </li>
+            <li>
+              <strong>Why binary search is polynomial.</strong> Numbers are written in binary, so
+              $\log_2(u-\ell+1)$ is polynomial in input size. Each coordinate uses $O(\log(u-\ell))$
+              queries; total $O(n\log(u-\ell))$ queries.
+            </li>
+          </ol>
+        </div>
+
+        <div class="tier">
+          <div class="tier-head">
+            <span class="tier-badge twist">Twist — 3-coloring</span>
+            <span class="tier-title">3-COLOR self-reducibility (the gadget twist)</span>
+          </div>
+          <p>
+            Witness format: a function $\chi:V\to\{\text{Red},\text{Green},\text{Blue}\}$ such that
+            no edge has equal endpoints. The twist: <em>colors don't have a natural order</em>, so we
+            can't binary-search. We need a forcing gadget.
+          </p>
+          <ol class="buildup">
+            <li>
+              <strong>Run $D$ once.</strong> If reject, no proper coloring exists.
+            </li>
+            <li>
+              <strong>Build color anchors $r,g,b$.</strong> Add three new vertices and the triangle edges
+              $rg,gb,br$. In any proper 3-coloring of the new graph, $r,g,b$ must each get a
+              different color — call them Red/Green/Blue (which one is which doesn't matter, just that they're different).
+            </li>
+            <li>
+              <strong>Forcing gadget.</strong> To force a vertex $v$ to take Red (= the color of $r$),
+              add edges $vg$ and $vb$. Now $v$ is forbidden from getting Green or Blue, so it must
+              be Red. (Symmetric for Green or Blue.)
+            </li>
+            <li>
+              <strong>Sweep all vertices.</strong> For each $v_i\in V$: try forcing Red, then Green, then
+              Blue. Query $D$ each time. <em>At least one</em> must accept (invariant: a proper
+              extension exists). Keep one accepting choice, lock in those edges, move on.
+            </li>
+            <li>
+              <strong>Query budget.</strong> $1$ initial $+ 3|V|$ trials = $O(|V|)$ queries — polynomial.
+            </li>
+          </ol>
+          <p style="color:var(--muted); font-size:0.95rem;">
+            Compare with ILP: there the gadget was a numeric inequality; here the gadget is a
+            forbidden-edge construction. <strong>Same recipe, different gadget.</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="pitfall">
+        <div class="pitfall-tag">Common mistakes</div>
+        <div class="pitfall-wrong">
+          <strong>Wrong:</strong> "Try $\chi(v_1)=\text{Red}$. If $D$ rejects, the graph isn't 3-colorable."
+          <em>No</em> — $D$ might reject just because <em>that particular fix</em> isn't extendable.
+          You haven't ruled out 3-colorability; you've ruled out "$v_1=$Red" specifically.
+        </div>
+        <div class="pitfall-right">
+          <strong>Right:</strong> "Try Red, Green, Blue in turn. At least one must accept by the
+          invariant; commit to one accepting choice and continue."
+        </div>
+        <div class="pitfall-wrong">
+          <strong>Wrong:</strong> "For ILP, just try every value $x_i\in[\ell,u]$ in order."
+          That's $u-\ell+1$ queries — but $u-\ell$ can be exponential in input size since $\ell,u$
+          are written in binary. <em>Always halve, never enumerate.</em>
+        </div>
+        <div class="pitfall-right">
+          <strong>Right:</strong> Binary-search the interval. $O(\log(u-\ell))$ queries — polynomial.
+        </div>
+      </div>
+
+      <div class="quiz" data-correct="1" data-correct-msg="Right — the triangle anchors three distinct colors, giving us a way to talk about 'the color of r' without committing to which actual color it is." data-wrong-msg="The triangle is the trick that lets us refer to colors symbolically.">
+        <div class="quiz-q">Why does 3-COLOR self-reducibility add a triangle $r,g,b$?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt">To increase the size of the graph so the decider takes longer.</button>
+          <button class="quiz-opt">So three named anchors get three distinct colors, letting us say "the color of $r$".</button>
+          <button class="quiz-opt">Triangles are always 3-colorable.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="practice">
+        <div class="practice-q">Practice: To force vertex $v$ to take the color of $g$, which edges should you add?</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Add edges $v$–$r$ and $v$–$b$. That blocks Red and Blue, leaving only Green available for $v$.</div>
+      </div>
+    </section>
+
+    <!-- ============ LOGSPACE ============ -->
+    <section id="logspace" class="section" data-screen-label="04 Logspace">
+      <span class="section-label teal">Section 04</span>
+      <h2>Logspace ($\mathsf{L}$) — tiny scratch paper</h2>
+      <p class="section-intro">
+        Picture a Turing machine with the input on a read-only tape and a tiny scratch tape,
+        only big enough for a few counters. That's it. That's logspace.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Why we measure space at all</div>
+        <h4>From "how long" to "how much memory"</h4>
+        <p>
+          So far we measured <em>time</em> (number of steps). Now we measure <em>space</em>
+          (cells of the work tape). Why? Because the universe of "fast" looks different
+          when you're memory-limited:
+        </p>
+        <ul class="tight" style="margin:0.4rem 0 0 1.1rem;">
+          <li>You can compute things in $O(\log n)$ space that you can <em>not</em> compute in $O(\log n)$ time
+            (a logspace machine has plenty of time — up to $n^{O(1)}$ steps).</li>
+          <li>Space, unlike time, is <em>reusable</em>. You can clear a counter and use the same cells again.</li>
+          <li>$\mathsf{L}\subseteq\mathsf{P}$ (every logspace decider halts in polynomial time, by configuration counting). Whether the inclusion is strict — $\mathsf{L}\ne\mathsf{P}$ — is a famous <em>open problem</em>, alongside $\mathsf{P}\stackrel{?}{=}\mathsf{NP}$. Don't claim strictness on the exam.</li>
+        </ul>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy</div>
+        Think of logspace as <strong>"a sticky note next to a textbook."</strong> The textbook (input)
+        is huge, you can flip back and forth as much as you want, but you can't write in it. Your
+        sticky note (work tape) only fits a few small numbers. You're allowed to <em>rescan and
+        recompute</em> as much as you want — but a halting logspace decider still has only
+        polynomially many distinct configurations, so it terminates in polynomial time.
+      </div>
+
+      <div class="zoom-out">
+        <h5>The single fact behind everything</h5>
+        A counter that holds a number from $0$ to $n$ uses $\lceil\log_2(n+1)\rceil$ bits in
+        binary. So <em>storing one counter is free</em> in logspace, and a constant number of
+        counters is also free. The line between "in $\mathsf{L}$" and "not in $\mathsf{L}$" is
+        almost always: <strong>did I just store something whose size grows with $n$?</strong>
+      </div>
+
+      <div class="template-card">
+        <strong>Template A · Prove $L\in\mathsf{L}$</strong>
+        <ol>
+          <li>Say: read-only input tape, $O(\log n)$ work tape.</li>
+          <li>Describe the algorithm in plain English.</li>
+          <li>List every variable kept on the work tape.</li>
+          <li>Bound each variable by $n$, so each uses $\log n$ bits.</li>
+          <li>State the invariant.</li>
+          <li>State the final accept condition.</li>
+        </ol>
+      </div>
+
+      <h3>Three graduated worked examples</h3>
+
+      <div class="tier-stack">
+        <div class="tier">
+          <div class="tier-head">
+            <span class="tier-badge warmup">Trivial</span>
+            <span class="tier-title">"Even number of 1s" — constant space</span>
+          </div>
+          <p>$L=\{w\in\{0,1\}^*:\#_1(w)\equiv 0\pmod 2\}$.</p>
+          <p>
+            Store one bit, $\mathit{parity}$. Initialize to $0$. Scan the input left to right; on
+            each $1$, flip $\mathit{parity}$. Accept iff $\mathit{parity}=0$ at the end.
+          </p>
+          <p style="color:var(--muted); font-size:0.95rem;">
+            Total work-tape: <strong>1 bit</strong>. That's $O(1)\subseteq O(\log n)$. Hence $L\in\mathsf{L}$.
+            (Works for any regular language — every regular language is in $\mathsf{L}$, with
+            $O(1)$ space, just by simulating the DFA.)
+          </p>
+        </div>
+
+        <div class="tier">
+          <div class="tier-head">
+            <span class="tier-badge standard">Standard</span>
+            <span class="tier-title">"Equal 0s and 1s" — counters appear</span>
+          </div>
+          <p>$L=\{w\in\{0,1\}^*:\#_0(w)=\#_1(w)\}$.</p>
+          <p>
+            Store two counters $c_0,c_1$, each initialized to $0$. Scan the input left to right;
+            on $0$ increment $c_0$, on $1$ increment $c_1$. Accept iff $c_0=c_1$.
+          </p>
+          <p style="color:var(--muted); font-size:0.95rem;">
+            Each counter is at most $n$, so each fits in $\lceil\log_2(n+1)\rceil$ bits. Total:
+            $O(\log n)$. Hence $L\in\mathsf{L}$. (Note: this language is <em>not regular</em>, so a
+            DFA can't decide it — but a logspace TM can, with two counters.)
+          </p>
+        </div>
+
+        <div class="tier">
+          <div class="tier-head">
+            <span class="tier-badge twist">Twist — longest-run language</span>
+            <span class="tier-title">"Longest a-run ≥ longest b-run"</span>
+          </div>
+          <p>$L'=\{w\in\{a,b\}^*:\text{longest a-run}\ge\text{longest b-run}\}$.</p>
+          <ol class="buildup">
+            <li>
+              <strong>State the model.</strong> "Read-only input tape. $O(\log n)$ work tape."
+            </li>
+            <li>
+              <strong>Decide what variables to keep.</strong> We need: the best a-run seen so far
+              ($\mathit{bestA}$), the best b-run ($\mathit{bestB}$), the current run length
+              ($\mathit{curr}$), and which symbol we're currently running on ($\mathit{sym}$).
+            </li>
+            <li>
+              <strong>Walk the input.</strong> For each character $x$:
+              <ul class="tight" style="margin-top:0.3rem;">
+                <li>If $x=\mathit{sym}$: increment $\mathit{curr}$.</li>
+                <li>Else: if $\mathit{sym}=a$, update $\mathit{bestA}\leftarrow\max(\mathit{bestA},\mathit{curr})$;
+                  if $\mathit{sym}=b$, update $\mathit{bestB}$. Then $\mathit{sym}\leftarrow x$, $\mathit{curr}\leftarrow 1$.</li>
+              </ul>
+              At end of input: do one final update.
+            </li>
+            <li>
+              <strong>Accept condition.</strong> Accept iff $\mathit{bestA}\ge\mathit{bestB}$.
+            </li>
+            <li>
+              <strong>Space audit.</strong>
+              $\mathit{bestA},\mathit{bestB},\mathit{curr}\le n$ → $O(\log n)$ bits each.
+              $\mathit{sym}\in\{a,b\}$ → 1 bit. Total: $O(\log n)$. Done.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="key-facts">
+        <div class="key-fact"><span class="label">Counters</span><span class="value teal">$O(\log n)$ bits each</span></div>
+        <div class="key-fact"><span class="label">Allowed</span><span class="value">A few of them</span></div>
+        <div class="key-fact"><span class="label">Forbidden</span><span class="value accent">Lists of length $n$</span></div>
+      </div>
+
+      <div class="pitfall">
+        <div class="pitfall-tag">Common mistakes</div>
+        <div class="pitfall-wrong">
+          <strong>Wrong:</strong> "Use a list of all the run lengths I've seen." That list has up
+          to $n/2$ entries — that's $\Theta(n)$ space, way too much.
+        </div>
+        <div class="pitfall-right">
+          <strong>Right:</strong> Only keep the <em>best so far</em>, plus what you're tracking right
+          now. Throw away history.
+        </div>
+        <div class="pitfall-wrong">
+          <strong>Wrong:</strong> "Copy the input to the work tape so I can re-scan it." The input is
+          length $n$ — that violates the $O(\log n)$ bound.
+        </div>
+        <div class="pitfall-right">
+          <strong>Right:</strong> Keep the input on the read-only input tape; <em>scan it again</em>
+          if you need to. The space bound only constrains the work tape, not how many times you
+          re-read the input — a halting logspace decider still uses only polynomially many steps
+          overall (configuration counting).
+        </div>
+      </div>
+
+      <div class="compare">
+        <div class="left">
+          <h5>What does NOT fit</h5>
+          <ul class="tight">
+            <li>An array of $n$ booleans</li>
+            <li>The set of vertices reachable from $s$</li>
+            <li>An entire path you've traversed</li>
+            <li>A copy of the input</li>
+            <li>A list of run lengths</li>
+          </ul>
+        </div>
+        <div class="right">
+          <h5>What DOES fit</h5>
+          <ul class="tight">
+            <li>A counter from $0$ to $n^k$ (any fixed $k$)</li>
+            <li>$O(1)$ pointers into the input</li>
+            <li>The vertex you are <em>currently</em> looking at</li>
+            <li>A "best so far" running max/min</li>
+            <li>A constant number of bits of state</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="practice">
+        <div class="practice-q">Practice: Is "strings with an even number of 1s" in $\mathsf{L}$? What variables would you store?</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Yes. Store one bit, $\mathit{parity}$. Toggle it on every $1$ you read. Accept iff $\mathit{parity}=0$. Constant space, hence logspace.</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">Practice: "Strings over $\{0,1\}$ with the same number of 0s and 1s" — does the obvious approach work?</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Yes — keep two counters $c_0,c_1$, each $\le n$. Each fits in $\log n$ bits. Accept iff $c_0=c_1$. (Note: this language isn't regular, but it <em>is</em> in $\mathsf{L}$.)</div>
+      </div>
+    </section>
+
+    <!-- ============ NL & PATH ============ -->
+    <section id="nl" class="section" data-screen-label="05 NL and PATH">
+      <span class="section-label teal">Section 05</span>
+      <h2>$\mathsf{NL}$ and $\mathsf{PATH}$</h2>
+      <p class="section-intro">
+        $\mathsf{NL}$ adds nondeterminism to logspace. The mental model: an $\mathsf{NL}$
+        machine guesses one step at a time and only remembers <em>where it currently is</em>.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Why nondeterminism + tiny memory is a class on its own</div>
+        <h4>Same idea as $\mathsf{NP}$, but with space instead of time</h4>
+        <p>
+          Recall how $\mathsf{NP}$ works: there's a polynomial-time verifier, and we accept
+          iff <em>some</em> polynomial-length witness causes it to accept. $\mathsf{NL}$ is the
+          same idea, but the verifier must run in <em>logspace</em>:
+        </p>
+        <ul class="tight" style="margin:0.4rem 0 0 1.1rem;">
+          <li><strong>$\mathsf{NP}$:</strong> witness has size $n^{O(1)}$, written down on a separate tape, verifier runs in time $n^{O(1)}$.</li>
+          <li><strong>$\mathsf{NL}$:</strong> witness is generated <em>one step at a time</em>; verifier has only $O(\log n)$ space, so it can never store the whole witness.</li>
+        </ul>
+        <p>
+          The key restriction: an $\mathsf{NL}$ machine sees its random/guessed bits one at a
+          time, then must decide what to do with $O(\log n)$ memory. It cannot "save up"
+          guesses for later.
+        </p>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy</div>
+        Imagine playing a maze game where you can <em>see</em> your current room and you can
+        <em>guess</em> which door to take next. You have a notepad with only enough space for
+        the room you're in plus a step counter. You can't write down the full path. You just
+        guess, move, repeat. If <em>some</em> sequence of guesses leads to the exit, you accept.
+        That's exactly the $\mathsf{NL}$ machine deciding $\mathsf{PATH}$.
+      </div>
+
+      <div class="grid-2">
+        <div class="card tinted-teal">
+          <h4 style="margin-top:0;">Yes-instances</h4>
+          <p>At least one branch of the nondeterministic computation must accept.</p>
+        </div>
+        <div class="card tinted-accent">
+          <h4 style="margin-top:0;">No-instances</h4>
+          <p>No branch may accept — every guess sequence must fail verification.</p>
+        </div>
+      </div>
+
+      <div class="template-card">
+        <strong>Template B · Prove $L\in\mathsf{NL}$</strong>
+        <ol>
+          <li>Describe what the machine guesses nondeterministically.</li>
+          <li>Yes-instance: some guess sequence verifies. ✓</li>
+          <li>No-instance: no guess sequence verifies. ✓</li>
+          <li>List variables. Bound each by $n$.</li>
+          <li>Conclude $L\in\mathsf{NL}$.</li>
+        </ol>
+      </div>
+
+      <h3>$\mathsf{PATH}\in\mathsf{NL}$ — the canonical example</h3>
+      <p>
+        $\mathsf{PATH}=\{\langle G,s,t\rangle: \text{there is a directed path from }s\text{ to }t\}$.
+      </p>
+
+      <div class="walk" data-captions='[
+        "Start at s. Store only the current vertex and a step counter (≤|V|).",
+        "Nondeterministically guess an outgoing edge. Step counter += 1.",
+        "Update the current vertex. Forget where you came from — that path is unrecoverable in logspace.",
+        "If current = t, accept. Otherwise keep guessing. Reject after |V| steps.",
+        "On a yes-instance, some guess sequence is the actual path. On a no-instance, no sequence ever lands on t."
+      ]'>
+        <div class="walk-controls">
+          <button class="walk-step is-active"><span class="num">01</span>Initial state</button>
+          <button class="walk-step"><span class="num">02</span>Guess an edge</button>
+          <button class="walk-step"><span class="num">03</span>Move</button>
+          <button class="walk-step"><span class="num">04</span>Check for $t$</button>
+          <button class="walk-step"><span class="num">05</span>Why it works</button>
+        </div>
+        <div>
+          <div class="walk-stage">
+            <div class="walk-scene" style="display:block;">
+              <svg viewBox="0 0 480 240" class="gate-svg">
+                <circle cx="60" cy="120" r="22" fill="var(--accent)"/><text x="60" y="125" text-anchor="middle" fill="white" font-weight="800">s</text>
+                <circle cx="180" cy="60" r="22" fill="white" stroke="#183128" stroke-width="2"/><text x="180" y="65" text-anchor="middle">a</text>
+                <circle cx="180" cy="180" r="22" fill="white" stroke="#183128" stroke-width="2"/><text x="180" y="185" text-anchor="middle">b</text>
+                <circle cx="320" cy="120" r="22" fill="white" stroke="#183128" stroke-width="2"/><text x="320" y="125" text-anchor="middle">c</text>
+                <circle cx="430" cy="120" r="22" fill="var(--teal)"/><text x="430" y="125" text-anchor="middle" fill="white" font-weight="800">t</text>
+                <line x1="80" y1="110" x2="160" y2="70" stroke="#183128" stroke-width="2"/>
+                <line x1="80" y1="130" x2="160" y2="170" stroke="#183128" stroke-width="2"/>
+                <line x1="200" y1="60" x2="300" y2="115" stroke="#183128" stroke-width="2"/>
+                <line x1="200" y1="180" x2="300" y2="125" stroke="#183128" stroke-width="2"/>
+                <line x1="342" y1="120" x2="408" y2="120" stroke="#183128" stroke-width="2"/>
+                <rect x="20" y="20" width="120" height="36" rx="10" fill="rgba(201,93,63,0.12)"/>
+                <text x="80" y="42" text-anchor="middle" font-weight="700">curr = s</text>
+              </svg>
+            </div>
+            <div class="walk-scene">
+              <svg viewBox="0 0 480 240" class="gate-svg">
+                <circle cx="60" cy="120" r="22" fill="rgba(201,93,63,0.4)"/><text x="60" y="125" text-anchor="middle" fill="white" font-weight="800">s</text>
+                <circle cx="180" cy="60" r="22" fill="var(--accent)" stroke="#183128" stroke-width="2"/><text x="180" y="65" text-anchor="middle" fill="white">a</text>
+                <circle cx="180" cy="180" r="22" fill="white" stroke="#183128" stroke-width="2" stroke-dasharray="4 3"/><text x="180" y="185" text-anchor="middle">b</text>
+                <circle cx="320" cy="120" r="22" fill="white" stroke="#183128" stroke-width="2"/><text x="320" y="125" text-anchor="middle">c</text>
+                <circle cx="430" cy="120" r="22" fill="var(--teal)"/><text x="430" y="125" text-anchor="middle" fill="white" font-weight="800">t</text>
+                <line x1="80" y1="110" x2="160" y2="70" stroke="var(--accent)" stroke-width="4"/>
+                <line x1="80" y1="130" x2="160" y2="170" stroke="#183128" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+                <text x="120" y="80" font-weight="700" fill="var(--accent-deep)">guess!</text>
+              </svg>
+            </div>
+            <div class="walk-scene">
+              <svg viewBox="0 0 480 240" class="gate-svg">
+                <circle cx="60" cy="120" r="22" fill="rgba(24,49,40,0.15)"/><text x="60" y="125" text-anchor="middle" fill="white">s</text>
+                <circle cx="180" cy="60" r="22" fill="var(--accent)"/><text x="180" y="65" text-anchor="middle" fill="white" font-weight="800">a</text>
+                <circle cx="320" cy="120" r="22" fill="white" stroke="#183128" stroke-width="2"/><text x="320" y="125" text-anchor="middle">c</text>
+                <circle cx="430" cy="120" r="22" fill="var(--teal)"/><text x="430" y="125" text-anchor="middle" fill="white" font-weight="800">t</text>
+                <rect x="20" y="20" width="180" height="36" rx="10" fill="rgba(201,93,63,0.12)"/>
+                <text x="110" y="42" text-anchor="middle" font-weight="700">curr = a, steps = 1</text>
+              </svg>
+            </div>
+            <div class="walk-scene">
+              <svg viewBox="0 0 480 240" class="gate-svg">
+                <circle cx="180" cy="60" r="22" fill="rgba(24,49,40,0.15)"/><text x="180" y="65" text-anchor="middle" fill="white">a</text>
+                <circle cx="320" cy="120" r="22" fill="rgba(24,49,40,0.15)"/><text x="320" y="125" text-anchor="middle" fill="white">c</text>
+                <circle cx="430" cy="120" r="28" fill="var(--teal)" stroke="white" stroke-width="4"/><text x="430" y="128" text-anchor="middle" fill="white" font-weight="800" font-size="18">t ✓</text>
+                <text x="240" y="200" font-weight="700" fill="var(--teal)">curr = t → ACCEPT</text>
+              </svg>
+            </div>
+            <div class="walk-scene">
+              <svg viewBox="0 0 480 240" class="gate-svg">
+                <text x="240" y="60" text-anchor="middle" font-weight="800" font-size="18" fill="var(--ink)">Why this is logspace</text>
+                <rect x="60" y="90" width="170" height="100" rx="12" fill="rgba(46,122,101,0.12)" stroke="var(--teal)" stroke-width="2"/>
+                <text x="145" y="118" text-anchor="middle" font-weight="700">curr (vertex)</text>
+                <text x="145" y="142" text-anchor="middle" fill="var(--muted)">$\log |V|$ bits</text>
+                <text x="145" y="170" text-anchor="middle" font-weight="700">step counter</text>
+                <rect x="260" y="90" width="170" height="100" rx="12" fill="rgba(214,69,69,0.08)" stroke="var(--alert)" stroke-width="2" stroke-dasharray="6 4"/>
+                <text x="345" y="118" text-anchor="middle" font-weight="700">whole path?</text>
+                <text x="345" y="142" text-anchor="middle" fill="var(--muted)">$|V|\log|V|$ bits</text>
+                <text x="345" y="170" text-anchor="middle" fill="var(--alert)" font-weight="700">too big</text>
+              </svg>
+            </div>
+          </div>
+          <div class="walk-caption">Start at s. Store only the current vertex and a step counter (≤|V|).</div>
+        </div>
+      </div>
+
+      <div class="quiz" data-correct="2" data-correct-msg="Yes — the whole point of nondeterministic logspace is that you keep only your current position, never the full path." data-wrong-msg="It's a logspace question — what's the bottleneck?">
+        <div class="quiz-q">Why can't an $\mathsf{NL}$ machine simply store the whole guessed path?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt">Because nondeterministic machines can't write to the work tape.</button>
+          <button class="quiz-opt">Because the path could be longer than $|V|$.</button>
+          <button class="quiz-opt">Because a path uses up to $|V|\log|V|$ bits — too much for a $\log n$ work tape.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <!-- ============ PSPACE ============ -->
+    <section id="pspace" class="section" data-screen-label="06 PSPACE">
+      <span class="section-label teal">Section 06</span>
+      <h2>$\mathsf{PSPACE}$ &amp; Savitch</h2>
+      <p class="section-intro">
+        $\mathsf{P}$ and $\mathsf{NP}$ measured time. Now we measure memory. The headline:
+        polynomial space is robust under nondeterminism — Savitch only pays a square.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Why $\mathsf{PSPACE}$ is bigger than you think</div>
+        <h4>Polynomial space, exponential time</h4>
+        <p>
+          A polynomial-space machine is allowed up to $n^k$ tape cells — that's a lot more
+          than $\log n$. Why is it interesting? Because <em>space is reusable</em>: the same
+          $n^k$ cells can be re-written as many times as you want, so the same machine can
+          run for up to $2^{n^k}$ steps without repeating a configuration.
+        </p>
+        <p>
+          That makes $\mathsf{PSPACE}$ enormous: it contains all of $\mathsf{NP}$,
+          and even problems where you have to think about <em>strategies in two-player games</em>
+          (like generalized chess on an $n\times n$ board). $\mathsf{P}\subseteq\mathsf{PSPACE}$
+          is obvious — but $\mathsf{P}=\mathsf{PSPACE}$ is open and most likely false.
+        </p>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy for Savitch</div>
+        Imagine you're trying to verify "can I get from city $u$ to city $v$ in at most $T$
+        days?" using a single pad of paper. The naive approach (list every reachable city)
+        needs lots of paper. Savitch's trick: ask "is there a midpoint city $m$ that I can
+        reach from $u$ in $T/2$ days, and from which I can reach $v$ in $T/2$ days?" — recurse,
+        re-using the same pad of paper. Each recursion only adds a constant amount of paper.
+        Recursion depth is $\log T$, so total paper is $O(\log T)\times O(\text{paper per call})$.
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Configuration counting</div>
+        A configuration is a complete snapshot: state + head positions + work tape contents.
+        A space-bounded decider can have at most $2^{O(f(n))}$ distinct configurations and must
+        halt before repeating one. Hence $\mathsf{SPACE}(f)\subseteq\mathsf{TIME}(2^{O(f)})$.
+      </div>
+
+      <div class="hierarchy">
+        <h4 style="margin-top:0;">The main inclusion chain</h4>
+        <div style="font-size:1.3rem; text-align:center; padding:0.8rem 0;">
+          $\mathsf{L}\subseteq\mathsf{NL}\subseteq\mathsf{P}\subseteq\mathsf{NP}\subseteq\mathsf{PSPACE}=\mathsf{NPSPACE}\subseteq\mathsf{EXPTIME}$
+        </div>
+        <div class="grid-3" style="margin-top:0.8rem;">
+          <div class="card"><h4 style="margin-top:0;">$\mathsf{NL}\subseteq\mathsf{P}$</h4><p>Configuration graph has poly-many vertices; do BFS.</p></div>
+          <div class="card"><h4 style="margin-top:0;">$\mathsf{NP}\subseteq\mathsf{PSPACE}$</h4><p>A poly-time NTM uses at most polynomial space.</p></div>
+          <div class="card"><h4 style="margin-top:0;">$\mathsf{PSPACE}\subseteq\mathsf{EXPTIME}$</h4><p>Configuration counting argument.</p></div>
+        </div>
+      </div>
+
+      <div class="worked-card">
+        <strong>Theorem (Savitch).</strong>
+        $\mathsf{NSPACE}(f)\subseteq\mathsf{SPACE}(f^2)$ for $f(n)\ge \log n$.
+        <p>Plain English: nondeterministic space simulates deterministically with only a square blow-up. Since polynomials are closed under squaring, $\mathsf{PSPACE}=\mathsf{NPSPACE}$.</p>
+      </div>
+
+      <div class="practice">
+        <div class="practice-q">Practice: explain in one paragraph why $\mathsf{NP}\subseteq\mathsf{PSPACE}$.</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">A poly-time NTM runs for at most $n^k$ steps on any branch, so it uses at most $n^k$ tape cells. Simulate it deterministically by trying every $n^k$-bit guess string in turn; reuse the same poly-size work tape. Total space: polynomial. Hence $\mathsf{NP}\subseteq\mathsf{PSPACE}$.</div>
+      </div>
+    </section>
+
+    <!-- ============ NL-COMPLETENESS ============ -->
+    <section id="nl-complete" class="section" data-screen-label="07 PATH NL-complete">
+      <span class="section-label accent">Section 07</span>
+      <h2>$\mathsf{PATH}$ is $\mathsf{NL}$-complete</h2>
+      <p class="section-intro">
+        Hardness is a logspace reduction from <em>any</em> $\mathsf{NL}$ language to $\mathsf{PATH}$
+        via the configuration graph.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">What "complete" actually means here</div>
+        <h4>Universal hardness via reductions</h4>
+        <p>
+          You saw the same pattern with $\mathsf{NP}$: we picked $\mathsf{SAT}$ and showed that
+          <em>every</em> $\mathsf{NP}$ problem reduces to it. That made $\mathsf{SAT}$
+          $\mathsf{NP}$-complete: as hard as anything in $\mathsf{NP}$, give or take a poly-time reduction.
+        </p>
+        <p>
+          $\mathsf{NL}$-completeness is the same trick, scaled down: pick $\mathsf{PATH}$, show
+          every $\mathsf{NL}$ problem reduces to it via a <strong>logspace</strong> reduction.
+          We must use logspace — not poly-time — because if we used a more powerful reduction
+          we could mash the whole problem into the reduction itself, making the notion of
+          "complete for $\mathsf{NL}$" vacuous.
+        </p>
+      </div>
+
+      <div class="zoom-out">
+        <h5>The configuration graph trick (reused everywhere)</h5>
+        Every space-bounded TM can be turned into a graph reachability problem. This trick
+        appears in:
+        <ul class="tight" style="margin-top:0.3rem;">
+          <li>The $\mathsf{NL}$-completeness of $\mathsf{PATH}$ (this section).</li>
+          <li>The $\mathsf{NL}=\mathsf{coNL}$ proof (next section, with counting).</li>
+          <li>Savitch's Theorem (recursive midpoint search on the configuration graph).</li>
+          <li>Showing $\mathsf{NL}\subseteq\mathsf{P}$ (do BFS on the configuration graph).</li>
+        </ul>
+        Memorize the construction once and reuse it.
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy</div>
+        Think of an $\mathsf{NL}$ machine $M$ on input $w$ as a board game: each "configuration"
+        (state, head positions, work-tape contents) is a board position. Each transition is
+        a legal move. Saying "$M$ accepts $w$" is the same as saying "starting from the initial
+        board, you can reach a winning board through legal moves." But that's just
+        <em>graph reachability</em> — i.e., $\mathsf{PATH}$.
+      </div>
+
+      <div class="grid-2">
+        <div class="card tinted-teal">
+          <h4 style="margin-top:0;">Membership</h4>
+          <p>$\mathsf{PATH}\in\mathsf{NL}$ — the walkthrough above.</p>
+        </div>
+        <div class="card tinted-accent">
+          <h4 style="margin-top:0;">Hardness</h4>
+          <p>Take any $A\in\mathsf{NL}$ with NL-machine $M$. On input $w$, build $G_{M,w}$:</p>
+          <ul class="tight">
+            <li>Vertices: configurations of $M$ on $w$.</li>
+            <li>Edges: one-step transitions.</li>
+            <li>$s$ = start config, $t$ = accept config.</li>
+          </ul>
+          <p>$w\in A \iff \langle G_{M,w},s,t\rangle\in\mathsf{PATH}$.</p>
+        </div>
+      </div>
+
+      <div class="callout teal">
+        <div class="callout-title">Why the reduction is logspace</div>
+        For an $\mathsf{NL}$ machine $M$ on input of length $n$, a configuration is (state, input
+        head position, work-tape head position, work-tape contents). Each piece uses $O(\log n)$
+        bits, so a configuration fits in $O(\log n)$ space and the configuration graph has only
+        <strong>polynomially many</strong> vertices — $n^{O(1)}$, not exponentially many. The
+        logspace transducer iterates through pairs of configurations and writes each valid
+        one-step edge to its output tape one at a time; it never stores the whole graph, only
+        the two configurations it is currently comparing. The output is polynomial-size
+        <em>and</em> the work tape stays $O(\log n)$.
+      </div>
+
+      <div class="quiz" data-correct="0" data-correct-msg="Yes — that's the whole reason the configuration graph trick works." data-wrong-msg="Think about what each vertex represents.">
+        <div class="quiz-q">In $G_{M,w}$, what does an edge $c\to c'$ mean?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt">$M$ can move from configuration $c$ to $c'$ in one step (some nondeterministic choice).</button>
+          <button class="quiz-opt">There is a path of length $\log n$ between them.</button>
+          <button class="quiz-opt">$c$ and $c'$ have the same state.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <!-- ============ NL = coNL ============ -->
+    <section id="nl-conl" class="section" data-screen-label="08 NL = coNL">
+      <span class="section-label accent">Section 08</span>
+      <h2>$\mathsf{NL}=\mathsf{coNL}$ — the counting trick</h2>
+      <p class="section-intro">
+        Showing reachability is in $\mathsf{NL}$ is easy: guess a path. Showing
+        <em>non</em>-reachability is the surprising part. Immerman–Szelepcsényi.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Why this theorem is shocking</div>
+        <h4>Compare with the $\mathsf{NP}$ vs $\mathsf{coNP}$ situation</h4>
+        <p>
+          For $\mathsf{NP}$: showing a graph <em>has</em> a Hamilton cycle is easy (guess the
+          cycle, verify). Showing a graph <em>has no</em> Hamilton cycle requires checking
+          that <em>every</em> permutation fails — much harder. We believe (but cannot prove)
+          $\mathsf{NP}\ne\mathsf{coNP}$.
+        </p>
+        <p>
+          For $\mathsf{NL}$: by the same intuition, we'd expect $\mathsf{NL}\ne\mathsf{coNL}$.
+          But Immerman and Szelepcsényi (independently, 1987) proved <em>they're equal</em>.
+          The trick: instead of storing the set of reachable nodes, store only its <em>count</em>.
+        </p>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy</div>
+        You want to prove "Alice is <em>not</em> in the building" using only a clipboard with
+        room for one number. You can't store a list of everyone in the building. But suppose
+        someone tells you exactly $c$ people are in the building. Then you can: nondeterministically
+        guess each of the $c$ people one at a time, ask each one "are you Alice?", and if none of
+        them is Alice, you're done. The clipboard never holds more than the running count of
+        people checked so far.
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">The pivot</div>
+        Don't store the set of reachable vertices — store only the <strong>count</strong>
+        $c_i$ = number of vertices reachable from $s$ in $\le i$ edges. A count fits
+        in $\log n$ bits. The set doesn't.
+      </div>
+
+      <h3>The high-level shape</h3>
+      <ol class="tight">
+        <li>$\mathsf{PATH}$ is $\mathsf{NL}$-complete, so it's enough to show $\overline{\mathsf{PATH}}\in\mathsf{NL}$.</li>
+        <li>Storing all reachable vertices is too big.</li>
+        <li>Store $c_i$ instead — count of vertices reachable in $\le i$ steps.</li>
+        <li>Compute $c_{i+1}$ from $c_i$ by sweeping all vertices and using nondeterministic certificates.</li>
+        <li>Once you trust $c_{n-1}$, sweep again to verify $t$ isn't among the reachable vertices.</li>
+        <li>Only counters and vertex names are stored — logspace.</li>
+      </ol>
+
+      <div class="template-card">
+        <strong>What to write on the exam</strong>
+        <ol>
+          <li>Define $\overline{\mathsf{PATH}}$.</li>
+          <li>Note it suffices because $\mathsf{PATH}$ is $\mathsf{NL}$-complete.</li>
+          <li>Storing all reachable vertices doesn't fit in logspace.</li>
+          <li>Introduce $c_i$.</li>
+          <li>Explain inductive step $c_i\Rightarrow c_{i+1}$.</li>
+          <li>Conclude space is $O(\log n)$ counters and names.</li>
+        </ol>
+      </div>
+
+      <div class="practice">
+        <div class="practice-q">Practice: why is it OK that the algorithm runs in polynomial (or worse) <em>time</em>?</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">$\mathsf{NL}$ is a <em>space</em> class, not a time class. Logspace already implies polynomial time anyway, but the definition only constrains the work tape. We're free to recompute reachability certificates on demand.</div>
+      </div>
+    </section>
+
+    <!-- ============ CIRCUITS ============ -->
+    <section id="circuits" class="section" data-screen-label="09 Circuits">
+      <span class="section-label gold">Section 09</span>
+      <h2>Boolean circuits</h2>
+      <p class="section-intro">
+        Different model: instead of one Turing machine for all input lengths, a separate
+        circuit $C_n$ for each $n$. Inputs are bits. Gates are AND, OR, NOT. No cycles.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Why we need a second model at all</div>
+        <h4>A computational model closer to hardware</h4>
+        <p>
+          Turing machines are abstract; circuits are essentially what you build out of physical
+          AND/OR/NOT gates. Asking "how big a circuit do I need?" is asking "how much hardware
+          would this take?" — a more concrete, more practical question.
+        </p>
+        <p>
+          More importantly, circuits give us new ways to <em>separate</em> resources:
+        </p>
+        <ul class="tight" style="margin:0.4rem 0 0 1.1rem;">
+          <li><strong>Size</strong> = total number of gates = "how much hardware".</li>
+          <li><strong>Depth</strong> = longest input-to-output path = "how many sequential stages".</li>
+        </ul>
+        <p>
+          Two circuits can have the same size but very different depths — and depth is what
+          captures <em>parallel time</em>. That's a distinction Turing machines can't easily make.
+        </p>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy</div>
+        Picture an assembly line. <strong>Size</strong> = total number of workers. <strong>Depth</strong>
+        = number of stations a single product passes through. With more workers in parallel
+        (larger size), the line can be wider but no faster per product. To make the line
+        <em>faster</em>, you have to shorten the depth. Same circuit, two independent dials.
+      </div>
+
+      <div class="zoom-out">
+        <h5>Critical conceptual leap: one circuit per input length</h5>
+        A single circuit can only handle inputs of one fixed length $n$ — its inputs are the
+        $n$ wires labelled $x_1,\ldots,x_n$. To decide a language $L\subseteq\{0,1\}^*$, we
+        need an <em>infinite family</em> of circuits, one for each $n$:
+        $$\mathcal{C}=(C_0,C_1,C_2,\ldots),\quad C_n(w)=1\iff w\in L\text{ for all }w\in\{0,1\}^n.$$
+        Allowing a different circuit for each length is what makes circuit families
+        <em>much</em> more powerful than Turing machines — and what gives rise to the surprise that
+        $\mathsf{P/poly}$ contains undecidable languages.
+      </div>
+
+      <div class="grid-2">
+        <div class="card tinted-teal">
+          <h4 style="margin-top:0;">Size</h4>
+          <p>Number of gates. Tracks "how big".</p>
+        </div>
+        <div class="card tinted-accent">
+          <h4 style="margin-top:0;">Depth</h4>
+          <p>Longest path from input to output. Tracks <em>parallel time</em> if same-level gates fire together.</p>
+        </div>
+      </div>
+
+      <h3>Two gate bases</h3>
+      <table class="def-table">
+        <thead><tr><th>Basis</th><th>What's allowed</th></tr></thead>
+        <tbody>
+          <tr><td>$\mathcal{B}_0$</td><td>Bounded fan-in AND/OR (typically 2-input), plus NOT.</td></tr>
+          <tr><td>$\mathcal{B}_1$</td><td>Unbounded fan-in AND/OR, plus NOT.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="template-card">
+        <strong>Template D · Convert $\mathcal{B}_1$ → $\mathcal{B}_0$</strong>
+        <ol>
+          <li>Find each unbounded gate of fan-in $k$.</li>
+          <li>Replace it with a balanced binary tree of the same gate type.</li>
+          <li>Cost per replacement: $k-1$ gates and $\lceil \log_2 k\rceil$ depth.</li>
+          <li>Combine the worst-case depths along an input-to-output path.</li>
+        </ol>
+      </div>
+
+      <div class="worked-card">
+        <strong>Worked example · OR over $n$ bits</strong>
+        <p>$L=\{w\in\{0,1\}^*: w\text{ has at least one }1\}$.</p>
+        <p><strong>Over $\mathcal{B}_1$:</strong> one unbounded OR. Size $1$, depth $1$.</p>
+        <p><strong>Over $\mathcal{B}_0$:</strong> balanced binary OR tree. Size $n-1$, depth $\lceil\log_2 n\rceil$.</p>
+      </div>
+    </section>
+
+    <!-- ============ MAJORITY ============ -->
+    <section id="majority" class="section" data-screen-label="10 Majority circuit">
+      <span class="section-label gold">Section 10</span>
+      <h2>Majority circuit</h2>
+      <p class="section-intro">
+        Click the bits. Watch the OR-of-ANDs decide majority on the fly.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Why majority is the canonical example</div>
+        <h4>A function that is "easy" for $\mathcal{B}_1$, harder for $\mathcal{B}_0$</h4>
+        <p>
+          Majority is the question: <em>does at least half of my input equal 1?</em> (We accept
+          when ones are $\ge\lceil n/2\rceil$, i.e. ones $\ge k$ for $k=\lfloor n/2\rfloor+1$ when
+          $n$ is odd, and $k=n/2$ when $n$ is even — in either case, $k=\lfloor n/2\rfloor+1$
+          witnesses a strict majority.) It has a nice <strong>OR of ANDs</strong> formula with
+          $\binom{n}{k}\le 2^n$ terms, each an unbounded-fan-in AND — so over $\mathcal{B}_1$
+          (unbounded fan-in), it's exponentially big but only depth 2. Convert it to
+          $\mathcal{B}_0$ (bounded fan-in) and the depth blows up to $O(\log\binom{n}{k})$ which
+          is $O(n)$ in the worst case.
+        </p>
+        <p>
+          That contrast is the headline of this section: <em>different gate bases give different
+          size/depth trade-offs even on the same function</em>.
+        </p>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy for the "OR of ANDs" recipe</div>
+        Imagine you want to know if a committee voted yes (majority of $n$ members say yes).
+        For every possible "winning coalition" — every subset of size $k=\lfloor n/2\rfloor+1$ —
+        ask: did <em>all</em> members of this coalition say yes? (one big AND). Then ask: did
+        <em>any</em> of those coalitions all say yes? (one big OR). That's the circuit.
+      </div>
+
+      <div class="callout gold">
+        <div class="callout-title">The key observation</div>
+        Let $k=\lfloor n/2\rfloor+1$. Majority is 1 $\iff$ <em>some</em> set of $k$ positions are all 1.
+        Hence $\mathrm{MAJ}_n(x)=\bigvee_{|S|=k}\bigwedge_{i\in S}x_i$ — an OR of $\binom{n}{k}$ ANDs.
+      </div>
+
+      <div id="majority-demo" class="card" style="background:white; padding:1.4rem;">
+        <div style="margin-bottom:0.8rem; font-family:'Gill Sans',sans-serif; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); font-size:0.85rem;">
+          Click bits to toggle · n = 5
+        </div>
+        <div style="display:flex; gap:0.6rem; align-items:center; margin-bottom:1rem;">
+          <button class="maj-bit on" data-on="1">1</button>
+          <button class="maj-bit" data-on="0">0</button>
+          <button class="maj-bit on" data-on="1">1</button>
+          <button class="maj-bit on" data-on="1">1</button>
+          <button class="maj-bit" data-on="0">0</button>
+        </div>
+        <div id="maj-summary" style="margin-bottom:0.6rem;"></div>
+        <div style="font-family:'Gill Sans',sans-serif; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); font-size:0.78rem;">$k$-subsets that are all 1 (these are the AND gates that fire):</div>
+        <div id="maj-subsets" style="margin:0.5rem 0 1rem; display:flex; flex-wrap:wrap; gap:0.4rem;"></div>
+        <div id="maj-result" style="font-family:'Gill Sans',sans-serif; font-weight:800; font-size:1.6rem;"></div>
+      </div>
+
+      <h3>Counting size and depth</h3>
+      <div class="grid-2">
+        <div class="card tinted-gold">
+          <h4 style="margin-top:0;">Over $\mathcal{B}_1$</h4>
+          <ul class="tight">
+            <li>$\binom{n}{k}$ AND gates (one per subset).</li>
+            <li>1 unbounded OR gate.</li>
+            <li>Size $O(2^n)$ counting big gates as one.</li>
+            <li>Depth = 2.</li>
+          </ul>
+        </div>
+        <div class="card tinted-accent">
+          <h4 style="margin-top:0;">Over $\mathcal{B}_0$</h4>
+          <ul class="tight">
+            <li>Each AND becomes binary tree: $+(k-1)$ gates, depth $O(\log k)$.</li>
+            <li>The OR becomes binary tree: depth $O(\log\binom{n}{k})=O(n)$.</li>
+            <li>Size $O(n\,2^n)$, depth $O(n)$.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ P/POLY ============ -->
+    <section id="ppoly" class="section" data-screen-label="11 P/poly NC AC">
+      <span class="section-label gold">Section 11</span>
+      <h2>$\mathsf{P/poly}$, uniformity, $\mathsf{NC}$, $\mathsf{AC}$</h2>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Three new ideas to keep straight</div>
+        <h4>Non-uniformity, uniformity, and parallel depth</h4>
+        <p>
+          The whole circuit family discussion forks into three sub-ideas:
+        </p>
+        <ol class="tight" style="margin:0.4rem 0 0 1.1rem;">
+          <li>
+            <strong>Non-uniform circuits ($\mathsf{P/poly}$).</strong>
+            Each $C_n$ can be designed however we like — even with help from a god. Surprisingly
+            powerful: $\mathsf{P/poly}$ contains undecidable languages.
+          </li>
+          <li>
+            <strong>Uniform circuits.</strong> A logspace transducer must be able to
+            <em>output</em> $C_n$ on input $1^n$. This rules out cheating, brings circuits back in
+            line with Turing machines, and is the right model for $\mathsf{NC}$ and $\mathsf{AC}$.
+          </li>
+          <li>
+            <strong>Parallel depth ($\mathsf{NC}$, $\mathsf{AC}$).</strong> Once we have uniformity,
+            measure depth (= parallel time). $\mathsf{NC}^i$ uses bounded fan-in;
+            $\mathsf{AC}^i$ uses unbounded fan-in.
+          </li>
+        </ol>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Why $\mathsf{P/poly}$ contains undecidable languages</div>
+        Pick any unary undecidable language $L_K=\{1^n:n\in K\}$ for $K$ undecidable. For each
+        length $n$, there's only one possible input ($1^n$). So $C_n$ is either "always accept"
+        (if $n\in K$) or "always reject" — both trivial 1-gate circuits. The family has
+        polynomial size. But the family <em>itself</em> (which $n$'s use which circuit) encodes
+        the undecidable $K$. <strong>That's why we need uniformity</strong> — to forbid this kind of
+        cheating.
+      </div>
+
+      <div class="zoom-out">
+        <h5>The key inclusion you must be able to state</h5>
+        $$\mathsf{NC}^i\subseteq\mathsf{AC}^i\subseteq\mathsf{NC}^{i+1}.$$
+        First inclusion is by definition (bounded ⊆ unbounded). Second is fan-in conversion:
+        an unbounded fan-in gate of size $k$ becomes a depth-$O(\log k)$ tree of bounded gates,
+        and $k\le\text{poly}(n)$, so depth grows by at most an $O(\log n)$ factor.
+      </div>
+
+      <div class="grid-2">
+        <div class="card tinted-accent">
+          <h4 style="margin-top:0;">$\mathsf{P/poly}$</h4>
+          <p>Languages decided by polynomial-size circuit families. The family doesn't have to be computable — that's nonuniformity.</p>
+          <p style="color:var(--muted); font-size:0.92rem;"><strong>Surprising consequence:</strong> for any unary language, every length has only one possible input $1^n$. The circuit can be hardwired to accept or reject — even for undecidable unary languages.</p>
+        </div>
+        <div class="card tinted-teal">
+          <h4 style="margin-top:0;">Uniformity</h4>
+          <p>A family is <em>logspace-uniform</em> if a logspace transducer can output $C_n$ given $1^n$. This rules out hiding uncomputable info in the family.</p>
+        </div>
+      </div>
+
+      <h3>$\mathsf{NC}$ vs $\mathsf{AC}$</h3>
+      <table class="def-table">
+        <thead><tr><th>Class</th><th>Fan-in</th><th>Depth</th><th>Size</th></tr></thead>
+        <tbody>
+          <tr><td>$\mathsf{NC}^i$</td><td>Bounded</td><td>$O(\log^i n)$</td><td>poly</td></tr>
+          <tr><td>$\mathsf{AC}^i$</td><td>Unbounded AND/OR</td><td>$O(\log^i n)$</td><td>poly</td></tr>
+        </tbody>
+      </table>
+      <p>So: $\mathsf{NC}^i \subseteq \mathsf{AC}^i \subseteq \mathsf{NC}^{i+1}$.</p>
+
+      <h3>Binary addition $\in\mathsf{AC}^0$</h3>
+      <p>
+        Carries look sequential, but each carry can be written as a flat formula in the input bits.
+        Define $g_i = a_i\wedge b_i$ ("generate") and $p_i = a_i\vee b_i$ ("propagate"). Then
+      </p>
+      <p>
+        $$c_{i+1}=\bigvee_{k=1}^{i}\Big(g_k\wedge\bigwedge_{j=k+1}^{i}p_j\Big).$$
+      </p>
+      <p>
+        Each carry is OR-of-AND with unbounded fan-in — depth 2 over $\mathcal{B}_1$. The sum bit $s_i$ is a constant-size formula in $a_i,b_i,c_i$. Hence addition is in $\mathsf{AC}^0$.
+      </p>
+
+      <div class="quiz" data-correct="1" data-correct-msg="Right — bounded fan-in forces a binary tree, which costs depth log n." data-wrong-msg="Look at what each class allows.">
+        <div class="quiz-q">Why is OR of $n$ bits depth 1 in $\mathsf{AC}^0$ but depth $\Theta(\log n)$ in $\mathsf{NC}^1$?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt">Because $\mathsf{NC}^1$ uses smaller circuits.</button>
+          <button class="quiz-opt">$\mathsf{AC}^0$ allows an unbounded-fan-in OR; $\mathsf{NC}^1$ must use a binary tree.</button>
+          <button class="quiz-opt">Because $\mathsf{AC}^0$ is uniform.</button>
+        </div>
+        <div class="quiz-feedback"></div>
+      </div>
+    </section>
+
+    <!-- ============ RANDOMIZED ============ -->
+    <section id="randomized" class="section" data-screen-label="12 Randomized">
+      <span class="section-label plum">Section 12</span>
+      <h2>$\mathsf{RP}$, $\mathsf{coRP}$, $\mathsf{BPP}$, $\mathsf{ZPP}$</h2>
+      <p class="section-intro">
+        Randomized algorithms read random bits $r$ as well as the input $x$. The four classes
+        differ only in <em>what kind of error they allow</em>.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Why bother with randomness</div>
+        <h4>Sometimes a coin flip is faster than a deterministic plan</h4>
+        <p>
+          For some problems, a deterministic polynomial-time algorithm is hard or unknown to
+          construct, but a <em>randomized</em> algorithm is easy. Famous example: primality
+          testing (Miller–Rabin is fast, randomized; the deterministic AKS algorithm is slower
+          and conceptually much more complex). Another example: randomized min-cut (Section 14).
+        </p>
+        <p>
+          The whole point of $\mathsf{RP}/\mathsf{coRP}/\mathsf{BPP}/\mathsf{ZPP}$ is to
+          <em>quantify what kind of error</em> we tolerate. They are <strong>not</strong> different
+          kinds of randomness; they are different <strong>error contracts</strong>.
+        </p>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy — the four kinds of friend</div>
+        Imagine four friends, each of whom you call to ask "is this restaurant good?":
+        <ul class="tight" style="margin:0.4rem 0 0 1.1rem;">
+          <li><strong>$\mathsf{RP}$ friend:</strong> "If I say <em>yes</em>, trust me. If I say <em>no</em>, I might just be in a bad mood." (Never falsely accepts.)</li>
+          <li><strong>$\mathsf{coRP}$ friend:</strong> "If I say <em>no</em>, trust me. If I say <em>yes</em>, I might be too generous." (Never falsely rejects.)</li>
+          <li><strong>$\mathsf{BPP}$ friend:</strong> "I'm right at least 2/3 of the time, but either answer can be wrong sometimes."</li>
+          <li><strong>$\mathsf{ZPP}$ friend:</strong> "If I give you an answer, it's correct. Sometimes I just say 'I don't know.'"</li>
+        </ul>
+      </div>
+
+      <div class="zoom-out">
+        <h5>The relationships in one breath</h5>
+        $$\mathsf{P}\subseteq\mathsf{ZPP}=\mathsf{RP}\cap\mathsf{coRP}\subseteq\mathsf{RP}\subseteq\mathsf{BPP}\subseteq\mathsf{PSPACE}.$$
+        The two equalities you should know how to <em>prove</em>:
+        $\mathsf{RP}\subseteq\mathsf{BPP}$ and $\mathsf{ZPP}=\mathsf{RP}\cap\mathsf{coRP}$.
+      </div>
+
+      <table class="def-table">
+        <thead><tr><th>Class</th><th>Yes-instances</th><th>No-instances</th><th>Trust which answer?</th></tr></thead>
+        <tbody>
+          <tr><td><strong>$\mathsf{RP}$</strong></td><td>$\Pr[\text{accept}]\ge\tfrac12$</td><td>$\Pr[\text{accept}]=0$</td><td>Accept</td></tr>
+          <tr><td><strong>$\mathsf{coRP}$</strong></td><td>$\Pr[\text{accept}]=1$</td><td>$\Pr[\text{reject}]\ge\tfrac12$</td><td>Reject</td></tr>
+          <tr><td><strong>$\mathsf{BPP}$</strong></td><td>$\Pr[\text{accept}]\ge\tfrac23$</td><td>$\Pr[\text{accept}]\le\tfrac13$</td><td>Neither, but bounded error</td></tr>
+          <tr><td><strong>$\mathsf{ZPP}$</strong></td><td colspan="2">Never wrong; may output $\bot$ with prob $\le\tfrac12$.</td><td>Any non-$\bot$ answer</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout plum">
+        <div class="callout-title">Memory sentence</div>
+        <strong>$\mathsf{RP}$ never falsely accepts.</strong>
+        <strong>$\mathsf{coRP}$ never falsely rejects.</strong>
+        <strong>$\mathsf{BPP}$ has two-sided bounded error.</strong>
+        <strong>$\mathsf{ZPP}$ never lies, but may shrug.</strong>
+      </div>
+
+      <h3>Amplification — the workhorse</h3>
+      <p>
+        Run the algorithm $k$ times independently. If a bad event has probability $1-p$ in one run, it has probability $(1-p)^k$ across $k$ independent runs. Pick $k$ to drive that below your tolerance.
+      </p>
+
+      <div id="rp-bpp-sim" class="sim">
+        <div style="font-family:'Gill Sans',sans-serif; font-weight:800; font-size:1.1rem; margin-bottom:0.6rem;">RP amplification simulator</div>
+        <div class="sim-row">
+          <div>
+            <label>Single-run accept prob (p): <strong id="sim-p0-label"></strong></label><br>
+            <input type="range" id="sim-p0" min="0.05" max="0.95" step="0.01" value="0.5">
+          </div>
+          <div>
+            <label>Independent runs (k): <strong id="sim-runs-label"></strong></label><br>
+            <input type="range" id="sim-runs" min="1" max="50" step="1" value="2">
+          </div>
+        </div>
+        <div style="margin-top:1rem;">
+          <span class="sim-stat" id="sim-acc"></span><span class="sim-stat-label">Accept on yes-instance</span>
+          <div class="sim-bar"><div class="sim-fill" id="sim-acc-bar"></div></div>
+        </div>
+        <div>
+          <span class="sim-stat" id="sim-err" style="color:var(--alert);"></span><span class="sim-stat-label">False reject = $(1-p)^k$</span>
+          <div class="sim-bar"><div class="sim-fill" id="sim-err-bar" style="background:linear-gradient(90deg, var(--alert), var(--accent));"></div></div>
+        </div>
+        <p style="color:var(--muted); margin-top:0.8rem;">Set $p=0.5$ and $k=2$: false-reject is $25\%$, accept-on-yes is $75\% \ge 2/3$. That's the proof of $\mathsf{RP}\subseteq\mathsf{BPP}$ in one slider.</p>
+      </div>
+    </section>
+
+    <!-- ============ RANDOMIZED PROOFS ============ -->
+    <section id="rand-proofs" class="section" data-screen-label="13 Randomized inclusions">
+      <span class="section-label plum">Section 13</span>
+      <h2>Randomized inclusions — proof recipes</h2>
+
+      <div class="zero-intro">
+        <div class="zero-tag">How to think about these proofs</div>
+        <h4>Both proofs follow the same recipe (Template E)</h4>
+        <p>
+          Don't memorize a wall of probabilities. Memorize the <em>recipe</em>:
+        </p>
+        <ol class="tight" style="margin:0.4rem 0 0 1.1rem;">
+          <li><strong>Take the source machine</strong> (the machine guaranteed by the source class).</li>
+          <li><strong>Wrap it</strong> in a new machine that does something simple — usually run it 2–3 times and combine outputs.</li>
+          <li><strong>Compute the new yes-instance probability.</strong> Compare to the target class's threshold.</li>
+          <li><strong>Compute the new no-instance probability.</strong> Compare again.</li>
+          <li><strong>Conclude.</strong></li>
+        </ol>
+        <p>
+          The "something simple" is usually one of: run twice and OR (for $\mathsf{RP}\to\mathsf{BPP}$),
+          run twice and AND (for $\mathsf{coRP}\to\mathsf{BPP}$), or do "first machine, then second
+          machine" (for the $\mathsf{ZPP}$ proof).
+        </p>
+      </div>
+
+      <div class="worked-card">
+        <strong>Theorem · $\mathsf{RP}\subseteq\mathsf{BPP}$</strong>
+        <p>Let $L\in\mathsf{RP}$ with machine $M$. Define $B$: run $M$ independently twice, accept iff at least one run accepts.</p>
+        <p><strong>No-instance.</strong> $M$ never accepts, so neither run accepts. $\Pr[B\text{ accepts}]=0\le \tfrac13$. ✓</p>
+        <p><strong>Yes-instance.</strong> Each run rejects with probability $\le \tfrac12$. Both reject with probability $\le \tfrac14$. So $\Pr[B\text{ accepts}]\ge \tfrac34\ge \tfrac23$. ✓</p>
+        <p>Done. The simulator above is exactly this proof.</p>
+      </div>
+
+      <div class="worked-card">
+        <strong>Theorem · $\mathsf{RP}\cap\mathsf{coRP}=\mathsf{ZPP}$</strong>
+        <p><strong>$(\subseteq)$.</strong> Let $M_R\in\mathsf{RP}$, $M_C\in\mathsf{coRP}$ both decide $L$. Define $Z$:</p>
+        <ol class="tight">
+          <li>Run $M_R(x)$. If it accepts → output 1. (Safe: $\mathsf{RP}$ never falsely accepts.)</li>
+          <li>Run $M_C(x)$. If it rejects → output 0. (Safe: $\mathsf{coRP}$ never falsely rejects.)</li>
+          <li>Otherwise → output $\bot$.</li>
+        </ol>
+        <p>Yes-instance: $M_R$ accepts with prob $\ge \tfrac12$, so $\Pr[Z\text{ outputs }1]\ge \tfrac12$. Similar on no-instances. ✓</p>
+        <p><strong>$(\supseteq)$.</strong> From a $\mathsf{ZPP}$ machine $Z$, build an $\mathsf{RP}$ machine (accept iff $Z$ outputs 1, otherwise reject) and a $\mathsf{coRP}$ machine (reject iff $Z$ outputs 0, otherwise accept).</p>
+      </div>
+
+      <div class="pitfall">
+        <div class="pitfall-tag">The most common mistake on these proofs</div>
+        <div class="pitfall-wrong">
+          <strong>Wrong:</strong> "By the law of large numbers, $\mathsf{BPP}$ machines are
+          basically always correct." That's not a proof — it's a vibe. The exam wants you to
+          give the actual probability bound, e.g. $(1/2)^2=1/4$ for two independent runs.
+        </div>
+        <div class="pitfall-right">
+          <strong>Right:</strong> Compute $\Pr[\text{both runs reject}]$ explicitly, multiply
+          independent probabilities, and compare to the threshold $1/3$ or $2/3$.
+        </div>
+        <div class="pitfall-wrong">
+          <strong>Wrong:</strong> For $\mathsf{ZPP}$, "Run $M_R$ and $M_C$ in parallel and
+          intersect their outputs." Vague — what counts as intersection?
+        </div>
+        <div class="pitfall-right">
+          <strong>Right:</strong> Be explicit: "Run $M_R$. If accept, output 1. Else run $M_C$.
+          If reject, output 0. Else output $\bot$." Then state which step is safe and why
+          (cite the one-sided guarantees of each source class).
+        </div>
+      </div>
+
+      <div class="practice">
+        <div class="practice-q">Practice: an $\mathsf{RP}$ machine is run $m$ times. What's the false-reject probability on a yes-instance?</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Each independent run rejects with probability $\le \tfrac12$. All $m$ reject with probability $\le 2^{-m}$. So false-reject $\le 2^{-m}$ — exponentially small in $m$.</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">Practice: prove $\mathsf{coRP}\subseteq\mathsf{BPP}$ from scratch (don't peek at the $\mathsf{RP}\subseteq\mathsf{BPP}$ proof first).</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Mirror image. Let $L\in\mathsf{coRP}$ with machine $M$. Define $B$: run $M$ twice, accept iff <em>both</em> runs accept. Yes-instance: each run accepts with probability $1$, so both accept with probability $1\ge 2/3$. ✓ No-instance: each run accepts with probability $\le 1/2$, so both accept with probability $\le 1/4\le 1/3$. ✓ Hence $L\in\mathsf{BPP}$.</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">Practice: which step in the $\mathsf{ZPP}\supseteq\mathsf{RP}\cap\mathsf{coRP}$ direction uses the fact that $\mathsf{RP}$ never falsely accepts?</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Step 1 ("if $M_R$ accepts, output 1"). The reason it's safe to <em>commit</em> to the answer 1 — without further checking — is precisely that an $\mathsf{RP}$ machine never falsely accepts a no-instance. Without that one-sided guarantee, this step would be wrong.</div>
+      </div>
+    </section>
+
+    <!-- ============ MIN-CUT ============ -->
+    <section id="mincut" class="section" data-screen-label="14 Min-cut">
+      <span class="section-label plum">Section 14</span>
+      <h2>Randomized min-cut (Karger)</h2>
+      <p class="section-intro">
+        Pick a random edge. Contract it (merge endpoints, drop self-loops, keep parallel edges).
+        Repeat until two vertices remain. Output the edges between them.
+      </p>
+
+      <div class="zero-intro">
+        <div class="zero-tag">Why this algorithm is famous</div>
+        <h4>Beautifully simple, surprisingly correct</h4>
+        <p>
+          A <em>cut</em> in a graph is a set of edges whose removal disconnects the graph
+          into two pieces. The <em>min-cut</em> is the smallest such set. Classical
+          deterministic algorithms (Stoer–Wagner, max-flow / min-cut) are clever and require
+          care.
+        </p>
+        <p>
+          Karger's algorithm is the opposite: <em>pick edges uniformly at random and contract
+          them</em>. It's almost embarrassing how simple it is. The miracle is the analysis —
+          you can prove the random algorithm finds <em>the</em> min-cut with probability at
+          least $2/(n(n-1))$. Run it a few hundred times and you're correct with overwhelming
+          probability.
+        </p>
+        <p>
+          <strong>Why do we love it?</strong> It's the cleanest example in the course of
+          "randomness as an algorithmic tool" — and the analysis introduces the technique
+          of conditional probability telescoping that you'll see again in advanced courses.
+        </p>
+      </div>
+
+      <div class="everyday">
+        <div class="everyday-tag">Analogy</div>
+        Imagine a network of pipes between cities, and you want to find the smallest set of
+        pipes whose removal disconnects two specific cities. Instead of carefully tracing flow,
+        Karger's strategy: pick a random pipe and "merge" its endpoints into one super-city,
+        keeping all other pipes that touched either endpoint. Repeat until two super-cities
+        remain. The pipes between them are your candidate cut. Because the min-cut is small
+        (relative to total edges), the random pick rarely lands inside it, and the algorithm
+        usually preserves it.
+      </div>
+
+      <div class="pitfall">
+        <div class="pitfall-tag">Common mistakes in the analysis</div>
+        <div class="pitfall-wrong">
+          <strong>Wrong:</strong> "The probability of contracting a min-cut edge is $k/m$ where
+          $m$ is the original number of edges." That bound is for the <em>first</em> iteration only;
+          $m$ changes after each contraction.
+        </div>
+        <div class="pitfall-right">
+          <strong>Right:</strong> Use that every vertex has degree $\ge k$ <em>at all times</em> (the
+          min-cut never changes), so a graph with $i$ vertices has $\ge ik/2$ edges. Hence
+          $\Pr[\text{contract bad edge in iteration with $i$ vertices}]\le 2/i$.
+        </div>
+        <div class="pitfall-wrong">
+          <strong>Wrong:</strong> "Take $r=n$ runs and the failure probability becomes
+          $(1-2/n^2)^n$, which is small."
+          $(1-2/n^2)^n\to 1$ as $n\to\infty$. Not small.
+        </div>
+        <div class="pitfall-right">
+          <strong>Right:</strong> Take $r=cn^2\log n$ runs. Then failure probability
+          $(1-2/n(n-1))^r\le e^{-2cr/n^2}=e^{-2c\log n}=n^{-2c}$. Pick $c$ for desired error.
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">Probability lower bound — the headline</div>
+        Fix any true min-cut $C$ of size $k$. The algorithm succeeds iff it never contracts an
+        edge of $C$. We will show
+        $$\Pr[\text{success}]\ \ge\ \frac{2}{n(n-1)}.$$
+        The derivation below walks through it step by step.
+      </div>
+
+      <div class="zoom-out">
+        <h5>Step-by-step derivation</h5>
+        <p>
+          The variable $i$ below is the number of vertices <em>currently remaining</em> at some
+          stage of the algorithm. We start at $i=n$ and shrink to $i=2$.
+        </p>
+
+        <ol class="buildup">
+          <li>
+            <strong>Min-cut survives across iterations.</strong> Any cut $C$ of the original graph
+            corresponds to a cut of the contracted graph (parallel edges count separately). So
+            <em>the size of the global min-cut is still $\ge k$</em> at every stage, as long as we
+            haven't contracted an edge of $C$.
+          </li>
+          <li>
+            <strong>Every vertex has degree $\ge k$.</strong> If some vertex $v$ in the contracted
+            graph had degree $<k$, then "isolate $v$" would already be a cut of size $<k$ —
+            contradicting (1).
+          </li>
+          <li>
+            <strong>Edges $\ge ik/2$.</strong> The handshake lemma:
+            $\sum_v \deg(v)=2|E|$. With $i$ vertices each of degree $\ge k$, the sum is $\ge ik$,
+            so $|E|\ge ik/2$.
+          </li>
+          <li>
+            <strong>Bad edges are exactly $k$.</strong> "Bad" = an edge of the min-cut $C$. By
+            assumption $|C|=k$ at the start, and (1) says $C$ remains a cut of size $k$ at every
+            stage we have not yet ruined.
+          </li>
+          <li>
+            <strong>Per-step bad probability $\le 2/i$.</strong> A uniform random edge picks bad
+            with probability
+            $$\Pr[\text{bad}]\ =\ \frac{|C|}{|E|}\ \le\ \frac{k}{ik/2}\ =\ \frac{2}{i}.$$
+            Equivalently, the chance we pick a <em>safe</em> edge is at least
+            $1-\tfrac{2}{i}=\tfrac{i-2}{i}$.
+          </li>
+          <li>
+            <strong>Multiply across all stages.</strong> The algorithm runs from $i=n$ down to
+            $i=3$ (after that single step the graph has 2 super-vertices and we stop). Conditioning
+            on having stayed safe so far, each stage contributes an $\ge \tfrac{i-2}{i}$ factor:
+            $$\Pr[\text{success}]\ \ge\ \prod_{i=3}^{n}\ \frac{i-2}{i}.$$
+          </li>
+        </ol>
+
+        <div style="margin:0.8rem 0;">
+          <strong>Telescoping the product.</strong> Write out a few terms with $n=6$ to see the
+          cancellation:
+          $$\frac{1}{3}\cdot\frac{2}{4}\cdot\frac{3}{5}\cdot\frac{4}{6}
+            \ =\ \frac{1\cdot 2\cdot 3\cdot 4}{3\cdot 4\cdot 5\cdot 6}.$$
+          The $3$ and $4$ in the numerator cancel the $3$ and $4$ in the denominator, leaving
+          $\tfrac{1\cdot 2}{5\cdot 6}=\tfrac{2}{30}=\tfrac{2}{6\cdot 5}=\tfrac{2}{n(n-1)}$.
+          In general,
+          $$\prod_{i=3}^{n}\frac{i-2}{i}
+            \ =\ \frac{1\cdot 2\cdot 3\cdots(n-2)}{3\cdot 4\cdot 5\cdots n}
+            \ =\ \frac{(n-2)!/0!}{n!/2!}
+            \ =\ \frac{2}{n(n-1)}.$$
+        </div>
+
+        <p style="margin-top:0.6rem;">
+          So a single run succeeds with probability $\ge \tfrac{2}{n(n-1)}=\Theta(1/n^2)$ —
+          small, but boostable: see the simulator below.
+        </p>
+      </div>
+
+      <div id="mincut-sim" class="sim" style="background:linear-gradient(180deg, #f3faf7, #e9f3ee); border-color:rgba(46,122,101,0.25);">
+        <div style="font-family:'Gill Sans',sans-serif; font-weight:800; font-size:1.1rem; margin-bottom:0.6rem;">Boost-by-repetition simulator</div>
+        <div class="sim-row">
+          <div><label>Vertices n: <strong id="mc-n-label"></strong></label><br><input type="range" id="mc-n" min="3" max="200" step="1" value="20"></div>
+          <div><label>Repetitions r: <strong id="mc-r-label"></strong></label><br><input type="range" id="mc-r" min="1" max="2000" step="1" value="100"></div>
+        </div>
+        <div class="mc-grid" style="margin-top:1rem;">
+          <div class="key-fact"><span class="label">Single-run success</span><span class="value teal" id="mc-single"></span></div>
+          <div class="key-fact"><span class="label">After $r$ runs</span><span class="value plum" id="mc-boost"></span></div>
+        </div>
+      </div>
+
+      <p style="color:var(--muted); font-size:0.95rem;">
+        For failure $\le 1/n$, take $r=O(n^2 \log n)$. Independent runs amplify success exponentially; the boosting bound is $1-(1-p)^r\ge 1-e^{-pr}$.
+      </p>
+    </section>
+
+    <!-- ============ MASTER TEMPLATES ============ -->
+    <section id="templates" class="section" data-screen-label="15 Master templates">
+      <span class="section-label accent">Section 15</span>
+      <h2>Master templates — copy-paste for the exam</h2>
+
+      <div class="grid-2">
+        <div class="template-card" style="margin:0;">
+          <strong>A · $L\in\mathsf{L}$</strong>
+          <p style="font-size:0.95rem;">"We give a deterministic logspace decider. The machine scans the input and stores [variables]. Each is at most [bound], so each uses $O(\log n)$ bits. The invariant is [...]. Accept iff [...]."</p>
+        </div>
+        <div class="template-card" style="margin:0;">
+          <strong>B · $L\in\mathsf{NL}$</strong>
+          <p style="font-size:0.95rem;">"Nondeterministic logspace decider. Guess [object] one step at a time, store only [variables]. If $x\in L$, some branch accepts. If $x\notin L$, no branch can pass verification."</p>
+        </div>
+        <div class="template-card" style="margin:0;">
+          <strong>C · Circuit family</strong>
+          <p style="font-size:0.95rem;">"For each $n$, define $C_n$ as [...]. $C_n(x)=1$ iff $x\in L$. Size = [count]. Depth = [bound]. Basis: $\mathcal{B}_0$ or $\mathcal{B}_1$."</p>
+        </div>
+        <div class="template-card" style="margin:0;">
+          <strong>D · Fan-in conversion</strong>
+          <p style="font-size:0.95rem;">"Replace each unbounded fan-in-$k$ gate by a balanced binary tree: $k-1$ gates, depth $\lceil\log_2 k\rceil$. New size = [...], new depth = [...]."</p>
+        </div>
+        <div class="template-card" style="margin:0;">
+          <strong>E · Randomized inclusion</strong>
+          <p style="font-size:0.95rem;">"Let $M$ be the source machine. Define $M'$ by [...]. Yes-instance probability: [...]. No-instance probability: [...]. Matches target class definition."</p>
+        </div>
+        <div class="template-card" style="margin:0;">
+          <strong>F · Self-reducibility</strong>
+          <p style="font-size:0.95rem;">"Decider $D$. Build the witness piece by piece using restricted instances that force each candidate. Maintain the extendability invariant. Polynomially many queries."</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MIXED PRACTICE ============ -->
+    <section id="mixed" class="section" data-screen-label="16 Mixed practice">
+      <span class="section-label accent">Section 16</span>
+      <h2>Mixed practice exam</h2>
+      <p class="section-intro">Pick the template letter, then write the proof. Reveal to check.</p>
+
+      <h3>Part A · Identify the template</h3>
+      <div class="practice">
+        <div class="practice-q">1. "Show that a language can be decided using three counters."</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Template <strong>A</strong> (logspace).</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">2. "Build a circuit for majority and count its depth."</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Template <strong>C</strong> (circuit family analysis).</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">3. "Show that an $\mathsf{RP}$ algorithm can be made into a $\mathsf{BPP}$ algorithm."</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Template <strong>E</strong> (randomized class inclusion).</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">4. "Recover a 3-coloring using a 3-coloring decider."</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Template <strong>F</strong> (self-reducibility).</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">5. "Show directed reachability is in nondeterministic logspace."</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Template <strong>B</strong> ($\mathsf{NL}$).</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">6. "Replace unbounded fan-in gates by bounded fan-in gates."</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Template <strong>D</strong> (fan-in conversion).</div>
+      </div>
+
+      <h3>Part B · Short proofs</h3>
+      <div class="practice">
+        <div class="practice-q">1. Prove "at least three 1s" $\in\mathsf{L}$.</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">One counter $c$ saturating at 3. Scan; if the symbol is $1$ and $c &lt; 3$, increment. Accept iff $c=3$. Constant space ⊆ logspace.</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">2. Prove "path of length exactly 3 from $s$ to $t$" $\in\mathsf{L}$.</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Loop over all $u,v$ using two vertex-name counters ($\log n$ each). Check the three edges $s\to u$, $u\to v$, $v\to t$ exist. Logspace.</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">3. Build a $\mathcal{B}_1$ circuit for "at least one input is 0".</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">$C_n(x)=\neg x_1\vee\cdots\vee\neg x_n$. $n$ NOTs feeding one unbounded OR. Size $O(n)$, depth 2.</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">4. Convert it to $\mathcal{B}_0$.</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">Keep the NOTs. Replace the fan-in-$n$ OR with a balanced binary OR tree: size $O(n)$, depth $O(\log n)$.</div>
+      </div>
+      <div class="practice">
+        <div class="practice-q">5. State the difference between $\mathsf{RP}$ and $\mathsf{coRP}$.</div>
+        <button class="reveal-btn">Reveal answer</button>
+        <div class="practice-a">$\mathsf{RP}$ never falsely accepts (accept is trustworthy). $\mathsf{coRP}$ never falsely rejects (reject is trustworthy).</div>
+      </div>
+    </section>
+
+    <!-- ============ SELF-TEST ============ -->
+    <section id="self-test" class="section" data-screen-label="16.5 Scored self-test">
+      <span class="section-label gold">Section 16.5</span>
+      <h2>Scored self-test — 8 questions, one shot each</h2>
+      <p class="section-intro">
+        Try to answer all eight without scrolling back. Each question accepts one click; the bar
+        below tracks how many you got right.
+      </p>
+
+      <div class="test-section">
+        <div class="progress-panel">
+          <div class="progress-panel-text">
+            <strong>Your progress is saved locally</strong>
+            in your browser only — flashcards you've flipped, practice answers you've revealed,
+            and self-test picks all persist across reloads. Nothing is sent anywhere.
+          </div>
+          <button id="reset-progress" class="reset-btn" type="button">
+            Reset all progress
+          </button>
+        </div>
+
+        <div class="test-progress" aria-hidden="true"><div class="test-progress-bar" id="test-bar"></div></div>
+        <div id="test-score" role="status" aria-live="polite">0 / 8 correct · 0 attempted</div>
+
+        <div class="quiz test-q" data-correct="1"
+          data-correct-msg="Right — a single name uses log n bits, but a per-vertex array uses Θ(n) bits."
+          data-wrong-msg="Hint: think about how many bits an array indexed by every vertex would take.">
+          <span class="quiz-label">Q 01 / 08</span>
+          <div class="quiz-q">A vertex name in an $n$-vertex graph fits in $O(\log n)$ bits, but a "visited" array does not. Why?</div>
+          <div class="quiz-options">
+            <button class="quiz-opt">Vertex names are smaller integers.</button>
+            <button class="quiz-opt">A name is one number $\le n$ ($\log n$ bits); the visited array uses $\Theta(n)$ bits — one bit per vertex.</button>
+            <button class="quiz-opt">Visited arrays use exponential space.</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz test-q" data-correct="0"
+          data-correct-msg="Right — store the count, not the set."
+          data-wrong-msg="The pivot in NL = coNL is replacing one specific data structure with a smaller one.">
+          <span class="quiz-label">Q 02 / 08</span>
+          <div class="quiz-q">Which step of the $\mathsf{NL}=\mathsf{coNL}$ algorithm keeps space at $O(\log n)$?</div>
+          <div class="quiz-options">
+            <button class="quiz-opt">Storing only the counts $c_i$ instead of the reachable set itself.</button>
+            <button class="quiz-opt">Using $\mathsf{PATH}$-completeness.</button>
+            <button class="quiz-opt">Running Savitch's theorem.</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz test-q" data-correct="2"
+          data-correct-msg="Right — every $\mathsf{NL}$ machine has its own start configuration on $w$, and the reduction uses that as $s$."
+          data-wrong-msg="Look back at the configuration graph trick.">
+          <span class="quiz-label">Q 03 / 08</span>
+          <div class="quiz-q">In the configuration graph used for $\mathsf{PATH}$-completeness, the start vertex $s$ is:</div>
+          <div class="quiz-options">
+            <button class="quiz-opt">The empty configuration.</button>
+            <button class="quiz-opt">A randomly chosen configuration.</button>
+            <button class="quiz-opt">$M$'s start configuration on input $w$.</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz test-q" data-correct="1"
+          data-correct-msg="Right — depth 1 with unbounded fan-in, depth $\Theta(\log n)$ as a balanced binary tree."
+          data-wrong-msg="Bounded fan-in forces a binary tree.">
+          <span class="quiz-label">Q 04 / 08</span>
+          <div class="quiz-q">An OR over $n$ inputs has depth ___ in $\mathcal{B}_1$ and depth ___ in $\mathcal{B}_0$.</div>
+          <div class="quiz-options">
+            <button class="quiz-opt">$O(\log n)$ and $O(1)$.</button>
+            <button class="quiz-opt">$1$ and $\Theta(\log n)$.</button>
+            <button class="quiz-opt">$O(1)$ and $O(n)$.</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz test-q" data-correct="2"
+          data-correct-msg="Right — $\binom{n}{k}$ can be exponential, and $\log_2(2^n)=n$."
+          data-wrong-msg="Track which gate's fan-in is the largest in the worst case.">
+          <span class="quiz-label">Q 05 / 08</span>
+          <div class="quiz-q">The $\mathcal{B}_0$ majority circuit has depth $O(n)$, not $O(\log n)$. Why?</div>
+          <div class="quiz-options">
+            <button class="quiz-opt">The $k$-input ANDs each have depth $\log k = O(\log n)$, and they pile up.</button>
+            <button class="quiz-opt">Because $\mathcal{B}_0$ is slow.</button>
+            <button class="quiz-opt">The final OR has fan-in $\binom{n}{k}$, which can be as large as $2^n$, so its binary tree has depth up to $n$.</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz test-q" data-correct="0"
+          data-correct-msg="Right — $\mathsf{RP}$'s accept and $\mathsf{coRP}$'s reject are the trustworthy answers; $\mathsf{ZPP}$ never lies but may abstain."
+          data-wrong-msg="Match each class with the answer it never gets wrong.">
+          <span class="quiz-label">Q 06 / 08</span>
+          <div class="quiz-q">Which is the correct memory phrase for randomized class trustworthiness?</div>
+          <div class="quiz-options">
+            <button class="quiz-opt">$\mathsf{RP}$ — accept; $\mathsf{coRP}$ — reject; $\mathsf{BPP}$ — neither alone; $\mathsf{ZPP}$ — both (when not $\bot$).</button>
+            <button class="quiz-opt">$\mathsf{RP}$ — reject; $\mathsf{coRP}$ — accept; $\mathsf{BPP}$ — both; $\mathsf{ZPP}$ — neither.</button>
+            <button class="quiz-opt">All four classes have the same trustworthiness.</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz test-q" data-correct="1"
+          data-correct-msg="Right — independent runs amplify a $1/n^2$ success into an exponentially small failure with $O(n^2\log n)$ tries."
+          data-wrong-msg="Look at how the bound behaves under repetition.">
+          <span class="quiz-label">Q 07 / 08</span>
+          <div class="quiz-q">In Karger's algorithm, why is the success bound $\frac{2}{n(n-1)}$ useful even though it's small?</div>
+          <div class="quiz-options">
+            <button class="quiz-opt">It's already very high.</button>
+            <button class="quiz-opt">It's $\Theta(1/n^2)$, so $O(n^2\log n)$ repetitions push failure below any inverse polynomial.</button>
+            <button class="quiz-opt">It's exponentially small.</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <div class="quiz test-q" data-correct="2"
+          data-correct-msg="Right — $x_j=a_j$ becomes $x_j\le a_j$ AND $-x_j\le -a_j$. With $a_j=-2$: $x_3\le -2$ and $-x_3\le 2$."
+          data-wrong-msg="The encoding turns equality into two $\le$ inequalities by negating one side.">
+          <span class="quiz-label">Q 08 / 08</span>
+          <div class="quiz-q">In the ILP self-reduction, $x_3=-2$ is encoded as which pair of constraints?</div>
+          <div class="quiz-options">
+            <button class="quiz-opt">$x_3\le 2$ and $-x_3\le -2$.</button>
+            <button class="quiz-opt">$x_3\le -2$ and $x_3\ge -2$.</button>
+            <button class="quiz-opt">$x_3\le -2$ and $-x_3\le 2$.</button>
+          </div>
+          <div class="quiz-feedback"></div>
+        </div>
+
+        <p style="color:var(--muted); font-size:0.95rem; margin-top:0.8rem;">
+          7+ correct: you're ready. 5–6: review the section that tripped you. ≤ 4: redo Day 1
+          before the exam.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ CHECKLIST ============ -->
+    <section id="checklist" class="section" data-screen-label="17 Final checklist">
+      <span class="section-label teal">Section 17</span>
+      <h2>The night-before checklist</h2>
+      <p class="section-intro">If you can do these from memory, you're ready.</p>
+
+      <div class="grid-2">
+        <ul class="tight">
+          <li>Define $\mathsf{L}, \mathsf{NL}, \mathsf{PSPACE}, \mathsf{P/poly}, \mathsf{NC}, \mathsf{AC}, \mathsf{RP}, \mathsf{coRP}, \mathsf{BPP}, \mathsf{ZPP}$.</li>
+          <li>Explain what fits in $O(\log n)$ space.</li>
+          <li>Prove a language is in $\mathsf{L}$ by listing counters.</li>
+          <li>Prove a language is in $\mathsf{NL}$ by guessing a path.</li>
+          <li>Explain why $\mathsf{PATH}$ is $\mathsf{NL}$-complete.</li>
+          <li>Sketch the $\mathsf{NL}=\mathsf{coNL}$ counting argument.</li>
+        </ul>
+        <ul class="tight">
+          <li>Build and analyze a circuit family (size, depth, basis).</li>
+          <li>Convert $\mathcal{B}_1\to\mathcal{B}_0$.</li>
+          <li>Build the majority circuit.</li>
+          <li>Prove $\mathsf{RP}\subseteq\mathsf{BPP}$.</li>
+          <li>Prove $\mathsf{RP}\cap\mathsf{coRP}=\mathsf{ZPP}$.</li>
+          <li>Analyze the success of randomized min-cut.</li>
+        </ul>
+      </div>
+
+      <div class="callout teal" style="margin-top:1.4rem;">
+        <div class="callout-title">Good luck</div>
+        Read the question, name the template, write it. Don't go cold. You've seen all of this.
+      </div>
+    </section>
+
+    <div class="footer">
+      <p>CS600 Theory of Computation · final-exam study companion · lectures 9–11.</p>
+      <p>This is a study aid. The original course materials are the source of truth.</p>
+    </div>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
